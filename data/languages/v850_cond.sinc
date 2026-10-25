@@ -6,15 +6,15 @@
 
 cc0003: "v"		is op0003=0x0		{ tmp:1 =  ($(PSW_OV));							export tmp; }
 cc0003: "nv"	is op0003=0x8		{ tmp:1 = !($(PSW_OV));							export tmp; }
-cc0003: "c"		is op0003=0x1		{ tmp:1 =  ($(PSW_CY));							export tmp; }
-cc0003: "nc"	is op0003=0x9		{ tmp:1 = !($(PSW_CY));							export tmp; }
-cc0003: "e"		is op0003=0x2		{ tmp:1 =  ($(PSW_Z));							export tmp; }
-cc0003: "ne"	is op0003=0xA		{ tmp:1 = !($(PSW_Z));							export tmp; }
+cc0003: "c/l"		is op0003=0x1		{ tmp:1 =  ($(PSW_CY));							export tmp; }
+cc0003: "nc/nl"	is op0003=0x9		{ tmp:1 = !($(PSW_CY));							export tmp; }
+cc0003: "z"		is op0003=0x2		{ tmp:1 =  ($(PSW_Z));							export tmp; }
+cc0003: "nz"	is op0003=0xA		{ tmp:1 = !($(PSW_Z));							export tmp; }
 cc0003: "nh"	is op0003=0x3		{ tmp:1 =  ($(PSW_CY) || $(PSW_Z)); 			export tmp; }
 cc0003: "h"		is op0003=0xB		{ tmp:1 = !($(PSW_CY) || $(PSW_Z)); 			export tmp; }
-cc0003: "n"		is op0003=0x4		{ tmp:1 =  ($(PSW_S)); 							export tmp; }
-cc0003: "p"		is op0003=0xC		{ tmp:1 = !($(PSW_S)); 							export tmp; }
-cc0003: "r"		is op0003=0x5		{ tmp:1 = 1; 									export tmp; }
+cc0003: "s/n"		is op0003=0x4		{ tmp:1 =  ($(PSW_S)); 							export tmp; }
+cc0003: "ns/p"		is op0003=0xC		{ tmp:1 = !($(PSW_S)); 							export tmp; }
+cc0003: "t"		is op0003=0x5		{ tmp:1 = 1; 									export tmp; }
 cc0003: "sa"	is op0003=0xD		{ tmp:1 =  ($(PSW_SAT));						export tmp; }
 cc0003: "lt"	is op0003=0x6		{ tmp:1 =  ($(PSW_S) ^^ $(PSW_OV));				export tmp; }
 cc0003: "ge"	is op0003=0xE		{ tmp:1 = !($(PSW_S) ^^ $(PSW_OV));				export tmp; }
@@ -24,15 +24,15 @@ cc0003: "gt"	is op0003=0xF		{ tmp:1 = !($(PSW_S) ^^ $(PSW_OV) || $(PSW_Z));	expo
 # same as cc0003 with another condition bits
 cc1720: "v"		is op1720=0x0		{ tmp:1 =  ($(PSW_OV));							export tmp; }
 cc1720: "nv"	is op1720=0x8		{ tmp:1 = !($(PSW_OV));							export tmp; }
-cc1720: "c"		is op1720=0x1		{ tmp:1 =  ($(PSW_CY));							export tmp; }
-cc1720: "nc"	is op1720=0x9		{ tmp:1 = !($(PSW_CY));							export tmp; }
-cc1720: "e"		is op1720=0x2		{ tmp:1 =  ($(PSW_Z));							export tmp; }
-cc1720: "ne"	is op1720=0xA		{ tmp:1 = !($(PSW_Z));							export tmp; }
+cc1720: "c/l"		is op1720=0x1		{ tmp:1 =  ($(PSW_CY));							export tmp; }
+cc1720: "nc/nl"	is op1720=0x9		{ tmp:1 = !($(PSW_CY));							export tmp; }
+cc1720: "z"		is op1720=0x2		{ tmp:1 =  ($(PSW_Z));							export tmp; }
+cc1720: "nz"	is op1720=0xA		{ tmp:1 = !($(PSW_Z));							export tmp; }
 cc1720: "nh"	is op1720=0x3		{ tmp:1 =  ($(PSW_CY) || $(PSW_Z)); 			export tmp; }
 cc1720: "h"		is op1720=0xB		{ tmp:1 = !($(PSW_CY) || $(PSW_Z)); 			export tmp; }
-cc1720: "n"		is op1720=0x4		{ tmp:1 =  ($(PSW_S)); 							export tmp; }
-cc1720: "p"		is op1720=0xC		{ tmp:1 = !($(PSW_S)); 							export tmp; }
-cc1720: "r"		is op1720=0x5		{ tmp:1 = 1; 									export tmp; }
+cc1720: "s/n"		is op1720=0x4		{ tmp:1 =  ($(PSW_S)); 							export tmp; }
+cc1720: "ns/p"		is op1720=0xC		{ tmp:1 = !($(PSW_S)); 							export tmp; }
+cc1720: "t"		is op1720=0x5		{ tmp:1 = 1; 									export tmp; }
 cc1720: "sa"	is op1720=0xD		{ tmp:1 =  ($(PSW_SAT));						export tmp; }
 cc1720: "lt"	is op1720=0x6		{ tmp:1 =  ($(PSW_S) ^^ $(PSW_OV));				export tmp; }
 cc1720: "ge"	is op1720=0xE		{ tmp:1 = !($(PSW_S) ^^ $(PSW_OV));				export tmp; }
@@ -40,8 +40,26 @@ cc1720: "le"	is op1720=0x7		{ tmp:1 =  ($(PSW_S) ^^ $(PSW_OV) || $(PSW_Z)); expo
 cc1720: "gt"	is op1720=0xF		{ tmp:1 = !($(PSW_S) ^^ $(PSW_OV) || $(PSW_Z));	export tmp; }
 
 
+# Bcond mnemonics as in the manual and objdump (bl/bnl/be/bne for c/nc/z/nz)
+bcc0003: "bv"	is op0003=0x0	{ }
+bcc0003: "bl"	is op0003=0x1	{ }
+bcc0003: "be"	is op0003=0x2	{ }
+bcc0003: "bnh"	is op0003=0x3	{ }
+bcc0003: "bn"	is op0003=0x4	{ }
+bcc0003: "br"	is op0003=0x5	{ }
+bcc0003: "blt"	is op0003=0x6	{ }
+bcc0003: "ble"	is op0003=0x7	{ }
+bcc0003: "bnv"	is op0003=0x8	{ }
+bcc0003: "bnl"	is op0003=0x9	{ }
+bcc0003: "bne"	is op0003=0xA	{ }
+bcc0003: "bh"	is op0003=0xB	{ }
+bcc0003: "bp"	is op0003=0xC	{ }
+bcc0003: "bsa"	is op0003=0xD	{ }
+bcc0003: "bge"	is op0003=0xE	{ }
+bcc0003: "bgt"	is op0003=0xF	{ }
+
 #Bcond addr9
-:b^cc0003 addr9 is op0710=0xB & cc0003 & addr9 {
+:^bcc0003 addr9 is op0710=0xB & bcc0003 & cc0003 & addr9 {
 	if (cc0003) goto addr9;
 }
 :br addr9 is op0710=0xB & op0003=0x5 & addr9 {
@@ -49,16 +67,16 @@ cc1720: "gt"	is op1720=0xF		{ tmp:1 = !($(PSW_S) ^^ $(PSW_OV) || $(PSW_Z));	expo
 }
 
 # SETF cond, reg2
-:setf^cc0003 R1115 is op0410=0x7E & cc0003 & R1115; op1631=0 {
+:setf cc0003, R1115 is op0410=0x7E & cc0003 & R1115; op1631=0 {
 	R1115 = zext(cc0003);
 }
 # SASF cccc, reg2
-:sasf^cc0003 R1115 is op0410=0x7E & cc0003 & R1115; op1631=0x0200 {
+:sasf cc0003, R1115 is op0410=0x7E & cc0003 & R1115; op1631=0x0200 {
 	R1115 = (R1115 << 1) | zext(cc0003);
 }
 
 # CMOV cccc, imm5, reg2, reg3
-:cmov^cc1720 s0004, R1115, R2731 is op0510=0x3F & s0004 & R1115; op2126=0x18 & op1616=0 & cc1720 & R2731 {
+:cmov cc1720, s0004, R1115, R2731 is op0510=0x3F & s0004 & R1115; op2126=0x18 & op1616=0 & cc1720 & R2731 {
 	if (cc1720) goto <true>;
 	# false
 		R2731 = R1115;
@@ -67,7 +85,7 @@ cc1720: "gt"	is op1720=0xF		{ tmp:1 = !($(PSW_S) ^^ $(PSW_OV) || $(PSW_Z));	expo
 		R2731 = s0004;
 }
 # CMOV cccc, reg1, reg2, reg3
-:cmov^cc1720 R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2126=0x19 & op1616=0 & cc1720 & R2731 {
+:cmov cc1720, R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2126=0x19 & op1616=0 & cc1720 & R2731 {
 	if (cc1720) goto <true>;
 	# false
 		R2731 = R1115;
@@ -77,7 +95,7 @@ cc1720: "gt"	is op1720=0xF		{ tmp:1 = !($(PSW_S) ^^ $(PSW_OV) || $(PSW_Z));	expo
 }
 
 # SBF cccc, reg1, reg2, reg3
-:sbf^cc1720 R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2126=0x1C & op1616=0 & cc1720 & R2731 {
+:sbf cc1720, R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2126=0x1C & op1616=0 & cc1720 & R2731 {
 	local lsb:4 = zext(cc1720);
 	local res:4 = R1115 - R0004 - lsb;
 	set_S_Z (res);
@@ -87,7 +105,7 @@ cc1720: "gt"	is op1720=0xF		{ tmp:1 = !($(PSW_S) ^^ $(PSW_OV) || $(PSW_Z));	expo
 	R2731 = res;
 }
 # ADF cccc, reg1, reg2, reg3
-:adf^cc1720 R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2126=0x1D & op1616=0 & cc1720 & R2731 {
+:adf cc1720, R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2126=0x1D & op1616=0 & cc1720 & R2731 {
 	local lsb:4 = zext(cc1720);
 	local res:4 = R1115 + R0004 + lsb;
 	set_S_Z (res);
