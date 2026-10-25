@@ -46,7 +46,6 @@ bcc0003: "bl"	is op0003=0x1	{ }
 bcc0003: "be"	is op0003=0x2	{ }
 bcc0003: "bnh"	is op0003=0x3	{ }
 bcc0003: "bn"	is op0003=0x4	{ }
-bcc0003: "br"	is op0003=0x5	{ }
 bcc0003: "blt"	is op0003=0x6	{ }
 bcc0003: "ble"	is op0003=0x7	{ }
 bcc0003: "bnv"	is op0003=0x8	{ }

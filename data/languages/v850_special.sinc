@@ -8,7 +8,6 @@
 
 # NOP
 :nop is op0015=0x0000 {
-	__nop();
 }
 
 # SYNCE
