@@ -17,7 +17,7 @@ define register offset=0x180 size=4 [
 
     # selID = 2
     PEID BMID SR2_2 SR3_2 SR4_2 HTCTL MEA ASID
-    MEI SR9_2 ISPR IMSR ICSR INTCFG PLMR RBCR0
+    MEI SR9_2 ISPR PMR_IMSR ICSR INTCFG PLMR RBCR0
     RBCR1 RBNR RBIP SR19_2 SR20_2 SR21_2 SR22_2 HTSCCTL
     HTSCTBL0 HTSCTBL1 HTSCTBL2 HTSCTBL3 HTSCTBL4 HTSCTBL5 HTSCTBL6 HTSCTBL7
 
@@ -111,7 +111,7 @@ attach variables [ SR0004_1 SR1115_1 ] [
 attach variables [ SR0004_2 SR1115_2 ] [
     # selID = 2
     PEID BMID SR2_2 SR3_2 SR4_2 HTCTL MEA ASID
-    MEI SR9_2 ISPR IMSR ICSR INTCFG PLMR RBCR0
+    MEI SR9_2 ISPR PMR_IMSR ICSR INTCFG PLMR RBCR0
     RBCR1 RBNR RBIP SR19_2 SR20_2 SR21_2 SR22_2 HTSCCTL
     HTSCTBL0 HTSCTBL1 HTSCTBL2 HTSCTBL3 HTSCTBL4 HTSCTBL5 HTSCTBL6 HTSCTBL7
 ];
@@ -283,15 +283,22 @@ attach variables [ VR0004 VR1115 ] [
 :ldl.w [R0004], R2731	is op0515=0x03F & R0004; op1626=0x378 & R2731 {
 	local addr:4 = R0004;
 	R2731 = *:4 addr;
-	# TODO store address
+	# create the link: a later STC.W to the same address succeeds
+	LLADDR = addr;
+	LLBIT = 1;
 }
 # store conditional (atomic)
 #{ "stc.w",	two (0x07e0, 0x037a),	two (0xffe0, 0x07ff),	{R3, R1},		2, PROCESSOR_V850E3V5_UP },
 :stc.w R2731, [R0004]	is op0515=0x03F & R0004; op1626=0x37A & R2731 {
 	local addr:4 = R0004;
+	local ok:1 = (LLBIT == 1) && (LLADDR == addr);
+	LLBIT = 0;
+	if (!ok) goto <fail>;
 	*:4 addr = R2731 : 4;
 	R2731 = 1;
-	# TODO set R2731 to 0, if addr of previous ldl.w is not the same
+	goto inst_next;
+	<fail>
+	R2731 = 0;
 }
 
 

@@ -31,6 +31,9 @@ define register offset=0x80 size=4 [
 @endif
 
 define register offset=0x1000 size=4 [ PC ];
+# LDL.W/STC.W link (RH850): linked address and link flag
+define register offset=0x1100 size=4 [ LLADDR ];
+define register offset=0x1104 size=1 [ LLBIT ];
 
 # internal registers to use with POPSP / PUSHSP (RH850), and the context register
 define register offset=0x10000 size=4 [
@@ -59,7 +62,6 @@ define context popspContext
 
 
 
-define pcodeop TODO;
 
 define pcodeop __nop;
 define pcodeop __synchronize;
