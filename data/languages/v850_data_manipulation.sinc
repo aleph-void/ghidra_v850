@@ -20,9 +20,10 @@
 	R0004 = sext( R0004:2 );
 }
 
+# The shift count is the low five bits of the operand (reg1 & 0x1f for register shifts).
 macro shift_right_u (res, _val, _shift) {
 	local val = _val;
-	local shift = _shift;
+	local shift = _shift & 0x1f;
 	res = val >> shift;
 	set_nOV_S_Z (val >> shift);
 	local lsb = val & (1 << (shift - 1));
@@ -30,7 +31,7 @@ macro shift_right_u (res, _val, _shift) {
 }
 macro shift_right_s (res, _val, _shift) {
 	local val = _val;
-	local shift = _shift;
+	local shift = _shift & 0x1f;
 	res = val s>> shift;
 	set_nOV_S_Z (val s>> shift);
 	local lsb = val & (1 << (shift - 1));
@@ -38,27 +39,26 @@ macro shift_right_s (res, _val, _shift) {
 }
 macro shift_left (res, _val, _shift) {
 	local val = _val;
-	local shift = _shift;
+	local shift = _shift & 0x1f;
 	res = val << shift;
 	set_nOV_S_Z (val << shift);
+	# CY = the last bit shifted out (bit 32 of the 33-bit result), 0 for a zero count
 	local c:5 = zext(val) << shift;
-	set_C (c[32,1]);
-	local msb = (val & (1 << (shift - 1))) >> 32;
-	set_C ((msb != 0) && (shift != 0));
+	set_C (c[32,1] && (shift != 0));
 }
 
 
 # SHR imm5, reg2
-:shr op0004, r1115 is op0510=0x14 & op0004 & r1115 {
-	shift_right_u (r1115, r1115, op0004);
+:shr op0004, R1115 is op0510=0x14 & op0004 & R1115 {
+	shift_right_u (R1115, R1115, op0004);
 }
 # SAR imm5, reg2
-:sar op0004, r1115 is op0510=0x15 & op0004 & r1115 {
-	shift_right_s (r1115, r1115, op0004);
+:sar op0004, R1115 is op0510=0x15 & op0004 & R1115 {
+	shift_right_s (R1115, R1115, op0004);
 }
 # SHL imm5, reg2
-:shl op0004, r1115 is op0510=0x16 & op0004 & r1115 {
-	shift_left (r1115, r1115, op0004);
+:shl op0004, R1115 is op0510=0x16 & op0004 & R1115 {
+	shift_left (R1115, R1115, op0004);
 }
 
 # SHR reg1, reg2
