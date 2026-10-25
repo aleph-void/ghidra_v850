@@ -8,6 +8,7 @@
 @include "v850_cond.sinc"
 @include "v850_func.sinc"
 @include "v850_special.sinc"
+@include "v850_extra.sinc"
 @include "v850_load_store.sinc"
 @include "v850_float.sinc"
 

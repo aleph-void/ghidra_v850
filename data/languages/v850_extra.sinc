@@ -1,0 +1,62 @@
+# Instructions GNU binutils decodes for V850E2V3 and later that were missing here: the
+# debug/trap group, the N-step division extension and the multiply-accumulate (accumulator)
+# extension. The extensions are modelled as user operations.
+
+define pcodeop __breakpoint;
+define pcodeop __dbtrap;
+define pcodeop __dbret;
+define pcodeop __rmtrap;
+define pcodeop __divide_step;
+define pcodeop __acc_load;
+define pcodeop __acc_mac;
+define pcodeop __acc_macu;
+define pcodeop __acc_store_hi;
+define pcodeop __acc_store_lo;
+
+# BREAKPOINT (0x0001, the GNU debugger's software breakpoint)
+:breakpoint is op0015=0x0001 { __breakpoint(); }
+
+# DBTRAP, RMTRAP: debug / recovery traps
+:dbtrap is op0015=0xF840 { __dbtrap(); }
+:rmtrap is op0015=0xF040 { __rmtrap(); }
+
+# DBRET: return from debug mode
+:dbret is op0015=0x07E0; op1631=0x0146 {
+	local t:4 = __dbret();
+	return [t];
+}
+
+# N-step division: DIVHN/DIVHUN imm (2..30), DIVN/DIVUN (4..30), SDIV*N (2..32);
+# the step count is 32 - 2 * imm4 (bits 18-21)
+divsteps: n is op1821 [ n = 32 - (op1821 * 2); ] { export *[const]:1 n; }
+:divhn divsteps, R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2226=0x0A & op1617=0 & op1821!=0 & divsteps & R2731 {
+	R2731 = __divide_step(0:1, divsteps, R0004, R1115, R2731);
+}
+:divhun divsteps, R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2226=0x0A & op1617=2 & op1821!=0 & divsteps & R2731 {
+	R2731 = __divide_step(1:1, divsteps, R0004, R1115, R2731);
+}
+:divn divsteps, R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2226=0x0B & op1617=0 & op1821!=0 & op1821!=15 & divsteps & R2731 {
+	R2731 = __divide_step(2:1, divsteps, R0004, R1115, R2731);
+}
+:divun divsteps, R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2226=0x0B & op1617=2 & op1821!=0 & op1821!=15 & divsteps & R2731 {
+	R2731 = __divide_step(3:1, divsteps, R0004, R1115, R2731);
+}
+:sdivhn divsteps, R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2226=0x06 & op1617=0 & divsteps & R2731 {
+	R2731 = __divide_step(4:1, divsteps, R0004, R1115, R2731);
+}
+:sdivhun divsteps, R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2226=0x06 & op1617=2 & divsteps & R2731 {
+	R2731 = __divide_step(5:1, divsteps, R0004, R1115, R2731);
+}
+:sdivn divsteps, R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2226=0x07 & op1617=0 & divsteps & R2731 {
+	R2731 = __divide_step(6:1, divsteps, R0004, R1115, R2731);
+}
+:sdivun divsteps, R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2226=0x07 & op1617=2 & divsteps & R2731 {
+	R2731 = __divide_step(7:1, divsteps, R0004, R1115, R2731);
+}
+
+# accumulator extension
+:ldacc R0004, R1115 is op0510=0x3F & R0004 & R1115; op1631=0x0BC4 { __acc_load(R0004, R1115); }
+:macacc R0004, R1115 is op0510=0x3F & R0004 & R1115; op1631=0x0BC0 { __acc_mac(R0004, R1115); }
+:macuacc R0004, R1115 is op0510=0x3F & R0004 & R1115; op1631=0x0BC2 { __acc_macu(R0004, R1115); }
+:stacch R1115 is op0010=0x07E0 & R1115; op1631=0x0BCA { R1115 = __acc_store_hi(); }
+:staccl R1115 is op0010=0x07E0 & R1115; op1631=0x0BC8 { R1115 = __acc_store_lo(); }
