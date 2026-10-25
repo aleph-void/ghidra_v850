@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Real-binary check: import each ELF built by fetch-real-samples.sh into headless Ghidra with NO
-# -processor flag (the ELF opinion picks the language), auto-analyze, decompile every function
+# -processor flag (the ELF opinion picks the language), except V850E1 binaries whose RH850 ABI
+# flags are indistinguishable from V850E2V3 and require an explicit language. Auto-analyze,
+# decompile every function
 # (RealCheck.java) and disassemble every instruction Ghidra found with GNU libopcodes at the same
 # address (slotdis -l, the machine matching the language Ghidra chose), scored by compare.py.
 #
@@ -20,10 +22,12 @@ PROJ=$(mktemp -d "${TMPDIR:-/tmp}/rh850-real.XXXXXX")
 trap 'rm -rf "$PROJ"' EXIT
 
 run_one() {
-	local f=$1 n p
+	local f=$1 n p processor=()
 	n=$(basename "$f")
 	p=$(mktemp -d "$PROJ/p.XXXXXX")
+	[[ $n == v850e1_* ]] && processor=(-processor RH850:LE:32:V850E1)
 	"$GHIDRA_INSTALL_DIR/support/analyzeHeadless" "$p" p -import "$f" -scriptPath "$HERE" \
+		"${processor[@]}" \
 		-postScript RealCheck.java "$W/$n.sum" "$W/$n.lst" "$W/$n.c" "$TMO" \
 		-deleteProject >"$W/$n.log" 2>&1 || tail -20 "$W/$n.log" >&2
 	rm -rf "$p"
@@ -44,6 +48,7 @@ for f in "${files[@]}"; do
 	n=$(basename "$f")
 	mach=v850e3v5
 	grep -q 'language: RH850:LE:32:V850E2M' "$W/$n.sum" && mach=v850e2v3
+	grep -q 'language: RH850:LE:32:V850E1' "$W/$n.sum" && mach=v850e1
 	base=$(python3 "$HERE/elf_exec_image.py" "$f" "$W/$n.img")
 	python3 "$HERE/lst2slots.py" "$W/$n.lst" >"$W/$n.slots"
 	"$SLOTDIS" "$mach" 8 "$W/$n.img" -l "$W/$n.slots" -b "$base" >"$W/$n.ref"

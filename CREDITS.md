@@ -58,6 +58,10 @@ Each item names the problem and how it was found.
    every call site a function and every jump an unrecoverable jump table). Found by real binaries.
 11. **Spec files**: GCC cspec (r20-r29 callee-saved, ep/lp not; 64-bit results in r11:r10), DWARF
    register map, ELF opinion for EM_V800, EM_V850 by architecture and EM_CYGNUS_V850.
+12. **V850E1 and follow-up fixes**: added the E1 language and architecture-specific ELF opinions,
+    a dedicated RH850 ELF loader, CALLT and GCC prologue-helper analyzers, and call fixups for
+    libgcc save/return helpers. Extended floating-point conversion p-code for FPSR rounding modes
+    and unsigned 64-bit values. Rechecked decode, emulation and nine GCC-built ELFs.
 
 Ghidra-Rare additions: `GHIDRA-RARE.md`, `CREDITS.md`, `build.gradle`, `test/`; the README's
 installation and TODO sections were updated, and `extension.properties` was replaced (upstream's

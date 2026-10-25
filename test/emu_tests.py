@@ -2,6 +2,8 @@
 """P-code semantic tests for the RH850 module, run in Ghidra's emulator by EmuCheck.java.
 
   emu_tests.py <outdir> [--break NAME]  -> emu.s, emu.bin (v850-elf-as -mv850e3v5 / ld), emu.txt
+  emu_tests.py <outdir> --arch v850e1   -> emu_v850e1.*: the tests that assemble for V850E1, for
+                                           the RH850:LE:32:V850E1 language
 
 Each test is a short instruction sequence at its own label. emu.txt has one line per test:
   <name> <start-hex> <stop-hex> <init: key=val,...|-> <expect: key=val,...>
@@ -112,6 +114,42 @@ TESTS = [
      {"r7": struct.unpack("<I", struct.pack("<f", -3.0))[0], "r9": 3, "r10": 4}),
     ("fpu_cmov", ["cmpf.s eq, r6, r6, 2", "cmovf.s 2, r7, r8, r9"], {"r6": F1, "r7": 0x11, "r8": 0x22},
      {"r9": 0x11}),
+    # FPSR.RM (bits 18-19) rounds inexact conversions: 0 nearest even, 1 toward zero, 2 toward
+    # +inf, 3 toward -inf. 2.5f = 0x40200000, 3.5f = 0x40600000, -2.5f = 0xc0200000.
+    ("fpu_rm_nearest", ["cvtf.sw r6, r7", "cvtf.sw r8, r9", "cvtf.sw r10, r11"],
+     {"FPSR": 0, "r6": 0x40200000, "r8": 0x40600000, "r10": 0xc0200000}, {"r7": 2, "r9": 4, "r11": 0xfffffffe}),
+    ("fpu_rm_zero", ["cvtf.sw r6, r7", "cvtf.sw r8, r9", "cvtf.sw r10, r11"],
+     {"FPSR": 0x40000, "r6": 0x40200000, "r8": 0x40600000, "r10": 0xc0200000}, {"r7": 2, "r9": 3, "r11": 0xfffffffe}),
+    ("fpu_rm_up", ["cvtf.sw r6, r7", "cvtf.sw r8, r9", "cvtf.sw r10, r11"],
+     {"FPSR": 0x80000, "r6": 0x40200000, "r8": 0x40600000, "r10": 0xc0200000}, {"r7": 3, "r9": 4, "r11": 0xfffffffe}),
+    ("fpu_rm_down", ["cvtf.sw r6, r7", "cvtf.sw r8, r9", "cvtf.sw r10, r11"],
+     {"FPSR": 0xc0000, "r6": 0x40200000, "r8": 0x40600000, "r10": 0xc0200000}, {"r7": 2, "r9": 3, "r11": 0xfffffffd}),
+    # 2^24 + 1 is not a single: nearest even 2^24 (0x4b800000), up 2^24 + 2 (0x4b800001)
+    ("fpu_rm_i2f_up", ["cvtf.ws r6, r7", "cvtf.ws r8, r9"], {"FPSR": 0x80000, "r6": 0x01000001, "r8": 0xfeffffff},
+     {"r7": 0x4b800001, "r9": 0xcb800000}),
+    ("fpu_rm_i2f_down", ["cvtf.ws r6, r7", "cvtf.ws r8, r9"], {"FPSR": 0xc0000, "r6": 0x01000001, "r8": 0xfeffffff},
+     {"r7": 0x4b800000, "r9": 0xcb800001}),
+    # double 1 + 2^-30 (0x3ff00000_04000000) to single: up 1 + 2^-23, its negation up -1.0
+    ("fpu_rm_ds_up", ["cvtf.ds r6, r8", "cvtf.ds r10, r9"],
+     {"FPSR": 0x80000, "r6": 0x04000000, "r7": 0x3ff00000, "r10": 0x04000000, "r11": 0xbff00000},
+     {"r8": 0x3f800001, "r9": 0xbf800000}),
+    # 1e300 (0x7e37e43c_8800759c) to single: nearest overflows to +inf, toward zero gives FLT_MAX
+    ("fpu_rm_ds_overflow", ["cvtf.ds r6, r8", "ldsr r12, fpsr", "cvtf.ds r6, r9"],
+     {"FPSR": 0, "r12": 0x40000, "r6": 0x8800759c, "r7": 0x7e37e43c}, {"r8": 0x7f800000, "r9": 0x7f7fffff}),
+    # 2^64 - 1 (unsigned) and 2^63 - 1 (signed) to single: nearest rounds up to 2^64 / 2^63,
+    # toward zero gives the largest singles below them
+    ("fpu_rm_l2f_nearest", ["cvtf.uls r6, r8", "cvtf.ls r10, r9"],
+     {"FPSR": 0, "r6": 0xffffffff, "r7": 0xffffffff, "r10": 0xffffffff, "r11": 0x7fffffff},
+     {"r8": 0x5f800000, "r9": 0x5f000000}),
+    ("fpu_rm_l2f_zero", ["cvtf.uls r6, r8", "cvtf.ls r10, r9"],
+     {"FPSR": 0x40000, "r6": 0xffffffff, "r7": 0xffffffff, "r10": 0xffffffff, "r11": 0x7fffffff},
+     {"r8": 0x5f7fffff, "r9": 0x5effffff}),
+    # 2^64 - 2048 (0x43efffff_ffffffff) to unsigned 64-bit: above 2^63
+    ("fpu_dul_big", ["cvtf.dul r6, r8"], {"FPSR": 0, "r6": 0xffffffff, "r7": 0x43efffff},
+     {"r8": 0xfffff800, "r9": 0xffffffff}),
+    # single 1 + 2^-12 (0x3f800800) to half: nearest 1.0 (0x3c00), up 1 + 2^-10 (0x3c01)
+    ("fpu_rm_sh", ["cvtf.sh r6, r7", "ldsr r12, fpsr", "cvtf.sh r6, r8"],
+     {"FPSR": 0, "r12": 0x80000, "r6": 0x3f800800}, {"r7": 0x3c00, "r8": 0x3c01}),
 ]
 
 SUBS = """
@@ -128,11 +166,38 @@ sub_frame:
 """
 
 
+def lines(asm):
+    out = []
+    for a in asm:
+        if a[:1].isdigit() and a[1:3] == ": ":
+            out += [a[:2], "\t" + a[3:]]
+        else:
+            out.append("\t" + a)
+    return out
+
+
+# tests that spell RH850-only instructions as raw .hword encodings (gas has no mnemonic for
+# them), so assembling for another architecture does not reject them
+RAW_RH850 = {"ldpostinc", "bcond17", "loop"}
+
+
+def assembles(asm, arch, out):
+    """does the test's code (with the shared subroutines) assemble for arch?"""
+    src = os.path.join(out, "probe.s")
+    open(src, "w").write("\n".join(["\t.text"] + lines(asm) + [SUBS]) + "\n")
+    return subprocess.call(["v850-elf-as", "-m" + arch, src, "-o", os.path.join(out, "probe.o")],
+                           stderr=subprocess.DEVNULL) == 0
+
+
 def main():
     out = sys.argv[1]
     brk = sys.argv[sys.argv.index("--break") + 1] if "--break" in sys.argv else None
+    arch = sys.argv[sys.argv.index("--arch") + 1] if "--arch" in sys.argv else "v850e3v5"
+    base = "emu" if arch == "v850e3v5" else "emu_" + arch
+    tests = [t for t in TESTS
+             if arch == "v850e3v5" or (t[0] not in RAW_RH850 and assembles(t[1], arch, out))]
     s = ["\t.text", "\t.org 0x100"]
-    for i, (name, asm, init, exp) in enumerate(TESTS):
+    for i, (name, asm, init, exp) in enumerate(tests):
         s.append("t%d:" % i)
         for a in asm:
             if a[:1].isdigit() and a[1:3] == ": ":
@@ -143,10 +208,10 @@ def main():
         s.append("t%d_end:" % i)
         s.append("\tbr t%d_end" % i)
     s.append(SUBS)
-    src = os.path.join(out, "emu.s")
+    src = os.path.join(out, base + ".s")
     open(src, "w").write("\n".join(s) + "\n")
-    obj, elf, binf = (os.path.join(out, "emu" + e) for e in (".o", ".elf", ".bin"))
-    subprocess.check_call(["v850-elf-as", "-mv850e3v5", src, "-o", obj])
+    obj, elf, binf = (os.path.join(out, base + e) for e in (".o", ".elf", ".bin"))
+    subprocess.check_call(["v850-elf-as", "-m" + arch, src, "-o", obj])
     subprocess.check_call(["v850-elf-ld", "-Ttext=0", "-e", "0", obj, "-o", elf])
     subprocess.check_call(["v850-elf-objcopy", "-O", "binary", "-j", ".text", elf, binf])
     syms = {}
@@ -154,15 +219,15 @@ def main():
         p = line.split()
         if len(p) == 3:
             syms[p[2]] = int(p[0], 16)
-    with open(os.path.join(out, "emu.txt"), "w") as f:
-        for i, (name, asm, init, exp) in enumerate(TESTS):
+    with open(os.path.join(out, base + ".txt"), "w") as f:
+        for i, (name, asm, init, exp) in enumerate(tests):
             exp = dict(exp)
             if name == brk:
                 k = next(iter(exp))
                 exp[k] = exp[k] ^ 1
             kv = lambda d: ",".join("%s=%x" % (k, v) for k, v in d.items()) or "-"
             f.write("%s %x %x %s %s\n" % (name, syms["t%d" % i], syms["t%d_end" % i], kv(init), kv(exp)))
-    print("%d emulator tests -> %s" % (len(TESTS), out))
+    print("%d emulator tests (%s) -> %s" % (len(tests), arch, out))
 
 
 if __name__ == "__main__":

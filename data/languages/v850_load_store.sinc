@@ -86,53 +86,69 @@
 }
 
 # LD.B disp23[reg1], reg3
+@ifndef V850E1
 :ld.b disp23[R0004], R2731 is op0515=0x03C & R0004; R2731 & op2026 & op1619=5; s3247
 [ disp23 = (s3247 << 7) | op2026; ] {
 	local addr:4 = disp23 + R0004;
 	R2731 = sext(*:1 addr);
 }
+@endif
 # LD.H disp23[reg1], reg3
+@ifndef V850E1
 :ld.h disp23[R0004], R2731 is op0515=0x03C & R0004; R2731 & op2126 & op1620=7; s3247
 [ disp23 = (s3247 << 7) | (op2126 << 1); ] {
 	local addr:4 = disp23 + R0004;
 	R2731 = sext(*:2 addr);
 }
+@endif
 # LD.W disp23[reg1], reg3
+@ifndef V850E1
 :ld.w disp23[R0004], R2731 is op0515=0x03C & R0004; R2731 & op2126 & op1620=9; s3247
 [ disp23 = (s3247 << 7) | (op2126 << 1); ] {
 	local addr:4 = disp23 + R0004;
 	R2731 = *:4 addr;
 }
+@endif
 # ST.B reg3, disp23[reg1]
+@ifndef V850E1
 :st.b R2731, disp23[R0004] is op0515=0x03C & R0004; R2731 & op2026 & op1619=0xD; s3247
 [ disp23 = (s3247 << 7) | op2026; ] {
 	local addr:4 = disp23 + R0004;
 	*:1 addr = R2731 : 1;
 }
+@endif
 # ST.W reg3, disp23[reg1]
+@ifndef V850E1
 :st.w R2731, disp23[R0004] is op0515=0x03C & R0004; R2731 & op2126 & op1620=0xF; s3247
 [ disp23 = (s3247 << 7) | (op2126 << 1); ] {
 	local addr:4 = disp23 + R0004;
 	*:4 addr = R2731;
 }
+@endif
 # LD.BU disp23[reg1], reg3
+@ifndef V850E1
 :ld.bu disp23[R0004], R2731 is op0515=0x03D & R0004; R2731 & op2026 & op1619=5; s3247
 [ disp23 = (s3247 << 7) | op2026; ] {
 	local addr:4 = disp23 + R0004;
 	R2731 = zext(*:1 addr);
 }
+@endif
 # LD.HU disp23[reg1], reg3
+@ifndef V850E1
 :ld.hu disp23[R0004], R2731 is op0515=0x03D & R0004; R2731 & op2026 & op1619=7; s3247
 [ disp23 = (s3247 << 7) | op2026; ] {
 	local addr:4 = disp23 + R0004;
 	R2731 = zext(*:2 addr);
 }
+@endif
 # ST.H reg3, disp23[reg1]
+@ifndef V850E1
 :st.h R2731, disp23[R0004] is op0515=0x03D & R0004; R2731 & op2126 & op1620=0xD; s3247
 [ disp23 = (s3247 << 7) | (op2126 << 1); ] {
 	local addr:4 = disp23 + R0004;
 	*:2 addr = R2731 : 2;
 }
+@endif
 
 # LD.BU disp16[reg1], reg2
 :ld.bu disp16[R0004], r1115 is op0610=0x1E & R0004 & r1115 & op0505; op1616=1 & s1731 

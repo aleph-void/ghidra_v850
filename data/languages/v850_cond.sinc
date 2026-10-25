@@ -94,6 +94,7 @@ bcc0003: "bgt"	is op0003=0xF	{ }
 }
 
 # SBF cccc, reg1, reg2, reg3
+@ifndef V850E1
 :sbf cc1720, R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2126=0x1C & op1616=0 & cc1720 & R2731 {
 	local lsb:4 = zext(cc1720);
 	local res:4 = R1115 - R0004 - lsb;
@@ -103,7 +104,9 @@ bcc0003: "bgt"	is op0003=0xF	{ }
 	$(PSW_CY) = (R1115 < (R0004 + lsb));
 	R2731 = res;
 }
+@endif
 # ADF cccc, reg1, reg2, reg3
+@ifndef V850E1
 :adf cc1720, R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op2126=0x1D & op1616=0 & cc1720 & R2731 {
 	local lsb:4 = zext(cc1720);
 	local res:4 = R1115 + R0004 + lsb;
@@ -113,4 +116,5 @@ bcc0003: "bgt"	is op0003=0xF	{ }
 	$(PSW_OV) = (sA == sB) && (sB != sR);
 	R2731 = res;
 }
+@endif
 

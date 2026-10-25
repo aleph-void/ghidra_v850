@@ -665,7 +665,17 @@ prefop: op2731	is op2731 { export *[const]:1 op2731; }
 	# This instruction arithmetically converts the single-precision floating-point format contents in general-purpose register
 	# reg2 to half-precision floating-point format, rounding the result in accordance with the current rounding mode. The result
 	# is zero-extended to word length and stored in general-purpose register reg3.
+	# The nearest result, stepped by one unit in the last place where FPSR.RM asks for a
+	# directed rounding (see tools/gen_float.py: directed()).
 	local tmp:2 = float2float(R1115);
+	local back:4 = float2float(tmp);
+	local gt:1 = back f> R1115;
+	local lt:1 = back f< R1115;
+	local rm:4 = (FPSR >> 18) & 3;
+	local dn:1 = gt && (rm == 3 || (rm == 1 && R1115 f> int2float(0:4)));
+	local up:1 = lt && (rm == 2 || (rm == 1 && R1115 f< int2float(0:4)));
+	local sg:2 = zext((tmp >> 15) != 0);
+	tmp = tmp + zext(dn) * (sg * 2 - 1) + zext(up) * (1 - sg * 2);
 	R2731 = zext(tmp);
 }
 # Floating-point Fused-Multiply-add (Single)

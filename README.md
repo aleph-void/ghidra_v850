@@ -15,8 +15,10 @@ Prebuilt extension zips for Ghidra 12.1.3, 12.1.4 and 12.2 are on this fork's Re
 install one with *File > Install Extensions* and restart Ghidra. To build from source, run
 `gradle buildExtension` with `GHIDRA_INSTALL_DIR` set (see [GHIDRA-RARE.md](GHIDRA-RARE.md)).
 
-The languages are `RH850:LE:32:default` (V850E3 / RH850, including G4MH) and
-`RH850:LE:32:V850E2M`. The processor is called RH850 so that it does not collide with the V850
+The languages are `RH850:LE:32:default` (V850E3 / RH850, including G4MH),
+`RH850:LE:32:V850E2M` and `RH850:LE:32:V850E1` (V850E/E1/ES core code). Select V850E1
+explicitly for E1 ELFs: GCC gives E1 and E2V3 the same RH850 ABI flags. The processor is called RH850
+so that it does not collide with the V850
 module that ships with Ghidra (an older derivative of this one); both offer themselves for V850
 ELF files.
 

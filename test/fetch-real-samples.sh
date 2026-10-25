@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Fetch public C sources (pinned, SHA-256 checked) and build them with v850-elf-gcc
-# (build-toolchain.sh) for V850E2V3 and RH850 (V850E3V5, hard float) into <outdir>/*.elf.
+# (build-toolchain.sh) for V850E1, V850E2V3 and RH850 (V850E3V5, hard float) into <outdir>/*.elf.
 # Nothing fetched or built here is committed.
 #   test/fetch-real-samples.sh <outdir>
 # Sources and licences: Lua 5.4.7 (MIT), zlib 1.3.1 (zlib licence); newlib (BSD-style) and
@@ -18,7 +18,7 @@ fetch https://zlib.net/fossils/zlib-1.3.1.tar.gz 9a93b2b7dfdac77ceba5a558a580e74
 (cd "$S" && rm -rf lua-5.4.7 zlib-1.3.1 && tar xzf lua-5.4.7.tar.gz && tar xzf zlib-1.3.1.tar.gz)
 v850-elf-gcc --version | head -1
 Z="adler32.c compress.c crc32.c deflate.c gzclose.c gzlib.c gzread.c gzwrite.c infback.c inffast.c inflate.c inftrees.c trees.c uncompr.c zutil.c"
-for cpu in v850e2v3 v850e3v5; do
+for cpu in v850e1 v850e2v3 v850e3v5; do
 	F="-O2 -g -m$cpu"
 	[[ $cpu == v850e3v5 ]] && F="$F -mhard-float"
 	(cd "$S/lua-5.4.7/src" && v850-elf-gcc $F -std=gnu99 -DLUA_USE_C89 -o "$O/${cpu}_lua.elf" \

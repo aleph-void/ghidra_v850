@@ -1,0 +1,16 @@
+@define V850E2M 1
+# V850E1 (also V850E and V850ES code): the V850E2M register file without the V850E2/E2V3
+# instructions, which v850_*.sinc guard with "@ifndef V850E1"
+@define V850E1 1
+
+
+@include "v850_common.sinc"
+@include "v850_arithmetic.sinc"
+@include "v850_logical.sinc"
+@include "v850_data_manipulation.sinc"
+@include "v850_cond.sinc"
+@include "v850_func.sinc"
+@include "v850_special.sinc"
+@include "v850_extra.sinc"
+@include "v850_load_store.sinc"
+@include "v850_float.sinc"

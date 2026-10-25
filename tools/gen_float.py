@@ -49,12 +49,14 @@ for op, base, fn in (("roundf", 0x00, "round"), ("trncf", 0x01, "trunc"),
         for dst, dk, dbit, uns in (("w", "S", 0x0, 0), ("uw", "S", 0x0, 1), ("l", "D", 0x4, 0), ("ul", "D", 0x4, 1)):
             unop("%s.%s%s" % (op, src, dst), base | (0x10 if uns else 0), 0x440 | sbit | dbit, sk, dk, "f2i:" + fn)
 
-# conversions cvtf.<src><dst> (rounding by the current mode, modelled as round-to-nearest)
+# conversions cvtf.<src><dst>: inexact results are rounded by FPSR.RM (bits 18-19: 0 nearest
+# even, 1 toward zero, 2 toward +inf, 3 toward -inf). The conversions that are always exact
+# (cvtf.wd, cvtf.uwd, cvtf.sd) need no rounding.
 for name, sub, sec, sk, dk, expr in (
-        ("cvtf.sw", 0x04, 0x440, "S", "S", "f2i:round"), ("cvtf.suw", 0x14, 0x440, "S", "S", "f2i:round"),
-        ("cvtf.sl", 0x04, 0x444, "S", "D", "f2i:round"), ("cvtf.sul", 0x14, 0x444, "S", "D", "f2i:round"),
-        ("cvtf.dw", 0x04, 0x450, "D", "S", "f2i:round"), ("cvtf.duw", 0x14, 0x450, "D", "S", "f2i:round"),
-        ("cvtf.dl", 0x04, 0x454, "D", "D", "f2i:round"), ("cvtf.dul", 0x14, 0x454, "D", "D", "f2i:round"),
+        ("cvtf.sw", 0x04, 0x440, "S", "S", "f2i:rm"), ("cvtf.suw", 0x14, 0x440, "S", "S", "f2i:rm"),
+        ("cvtf.sl", 0x04, 0x444, "S", "D", "f2i:rm"), ("cvtf.sul", 0x14, 0x444, "S", "D", "f2i:rm"),
+        ("cvtf.dw", 0x04, 0x450, "D", "S", "f2i:rm"), ("cvtf.duw", 0x14, 0x450, "D", "S", "f2i:rm"),
+        ("cvtf.dl", 0x04, 0x454, "D", "D", "f2i:rm"), ("cvtf.dul", 0x14, 0x454, "D", "D", "f2i:rm"),
         ("cvtf.ws", 0x00, 0x442, "S", "S", "i2f"), ("cvtf.uws", 0x10, 0x442, "S", "S", "u2f"),
         ("cvtf.ls", 0x01, 0x442, "D", "S", "i2f"), ("cvtf.uls", 0x11, 0x442, "D", "S", "u2f"),
         ("cvtf.wd", 0x00, 0x452, "S", "D", "i2f"), ("cvtf.uwd", 0x10, 0x452, "S", "D", "u2f"),
@@ -88,9 +90,79 @@ L.append('   "sf/st" "ngle/gle" "seq/sne" "ngl/gl" "lt/nlt" "nge/ge" "le/nle" "n
 L.append("")
 
 REG = {"S": ("R0004", "R1115", "R2731"), "D": ("D0004", "D1115", "D2731")}
+SIZE = {"S": 4, "D": 8}
 
 
-def body(expr, srcs, dst, sk, dk):
+def consts(n):
+    """locals one, half, two, c63 (2^63) of float size n"""
+    return ("local one:{n} = int2float(1:4); local two:{n} = one f+ one; local half:{n} = one f/ two; "
+            "local c63:{n} = int2float(0x4000000000000000:8); c63 = c63 f+ c63;").format(n=n)
+
+
+def to_int(y, r3, n, dk, uns):
+    """r3 = the integral float y as an integer; unsigned 64-bit results from 2^63 up are
+    converted as y - 2^63 with the top bit added"""
+    if dk == "D" and uns:
+        return ("if (y f>= c63) goto <hi>; {r3} = trunc({y}); goto <ok>; "
+                "<hi> local yh:{n} = {y} f- c63; {r3} = trunc(yh); {r3} = {r3} + 0x8000000000000000; <ok>"
+                ).format(y=y, r3=r3, n=n)
+    return "%s = trunc(%s);" % (r3, y)
+
+
+def rounded(x, n):
+    """y = x rounded to an integral value by FPSR.RM (ties to even for round-to-nearest)"""
+    return ("local rm:4 = (FPSR >> 18) & 3; local fl:{n} = floor({x}); local y:{n} = fl; "
+            "if (rm != 0) goto <dir>; "
+            "local fr:{n} = {x} f- fl; if (fr f< half) goto <rd>; "
+            "local hf:{n} = fl f/ two; local odd:1 = floor(hf) f!= hf; "
+            "if (fr f== half && !odd) goto <rd>; y = fl f+ one; goto <rd>; "
+            "<dir> if (rm == 3) goto <rd>; y = ceil({x}); if (rm == 2) goto <rd>; "
+            "if ({x} f< int2float(0:4)) goto <rd>; y = fl; <rd>").format(x=x, n=n)
+
+
+def directed(r, n, gt, lt, xpos, xneg):
+    """r (float of n bytes) is the round-to-nearest result; gt/lt say it is above/below the
+    exact value. Step it by one unit in the last place (on its bit pattern) where FPSR.RM asks
+    for a directed rounding: down for toward -inf (or toward zero of a positive value), up for
+    toward +inf (or toward zero of a negative value). This also turns an overflow to infinity
+    into the largest finite value and a underflow to zero into the smallest subnormal."""
+    return ("local rm:4 = (FPSR >> 18) & 3; "
+            "local dn:1 = ({gt}) && (rm == 3 || (rm == 1 && ({xpos}))); "
+            "local up:1 = ({lt}) && (rm == 2 || (rm == 1 && ({xneg}))); "
+            "local sg:{n} = zext(({r} >> {sb}) != 0); "
+            "{r} = {r} + zext(dn) * (sg * 2 - 1) + zext(up) * (1 - sg * 2);"
+            ).format(r=r, n=n, sb=8 * n - 1, gt=gt, lt=lt, xpos=xpos, xneg=xneg)
+
+
+def int_to_float(r2, r3, sk, dk, uns):
+    sn, dn_ = SIZE[sk], SIZE[dk]
+    if uns:
+        w = 16 if sk == "D" else 8
+        conv = "local u:%d = zext(%s); local r:%d = int2float(u);" % (w, r2, dn_)
+    else:
+        conv = "local r:%d = int2float(%s);" % (dn_, r2)
+    if sn == 4 and dn_ == 8:
+        return conv + " %s = r;" % r3  # always exact
+    if sn == 4:
+        # 32-bit integer to single: r is at most 2^32, so it converts back exactly in 64 bits
+        x = "zext(%s)" % r2 if uns else "sext(%s)" % r2
+        cmp = "local t:8 = trunc(r); local x:8 = %s; local gt:1 = t s> x; local lt:1 = t s< x;" % x
+    elif not uns:
+        # 64-bit signed: r can round up to 2^63, one beyond the range
+        cmp = ("%s local gt:1 = r f>= c63; local lt:1 = 0; if (gt) goto <big>; local t:8 = trunc(r); "
+               "gt = t s> %s; lt = t s< %s; <big>") % (consts(dn_), r2, r2)
+    else:
+        # 64-bit unsigned: r is in [0, 2^64]; from 2^63 up compare r - 2^63 (exact) instead
+        cmp = ("%s local gt:1 = 0; local lt:1 = 0; local t:8 = 0; if (r f>= c63) goto <big>; t = trunc(r); "
+               "goto <cmp>; <big> gt = r f>= (c63 f+ c63); if (gt) goto <done>; local rh:%d = r f- c63; "
+               "t = trunc(rh); t = t + 0x8000000000000000; <cmp> gt = t > %s; lt = t < %s; <done>"
+               ) % (consts(dn_), dn_, r2, r2)
+    xpos = "%s != 0" % r2 if uns else "%s s> 0" % r2
+    xneg = "0" if uns else "%s s< 0" % r2
+    return " ".join([conv, cmp, directed("r", dn_, "gt", "lt", xpos, xneg), "%s = r;" % r3])
+
+
+def body(expr, srcs, dst, sk, dk, uns=False):
     r1, r2, r3 = srcs  # reg1, reg2, reg3 names (reg1 may be None)
     if expr == "max":
         return "if (%s f< %s) goto <b>; %s = %s; goto <e>; <b> %s = %s; <e>" % (r2, r1, r3, r2, r3, r1)
@@ -100,19 +172,34 @@ def body(expr, srcs, dst, sk, dk):
         return "local one:%d = int2float(1:4); %s = one f/ %s;" % (8 if dk == "D" else 4, r3, r2)
     if expr == "rsqrt":
         return "local one:%d = int2float(1:4); %s = one f/ sqrt(%s);" % (8 if dk == "D" else 4, r3, r2)
+    if expr == "f2i:rm":
+        n = SIZE[sk]
+        return " ".join([consts(n), rounded(r2, n), to_int("y", r3, n, dk, uns)])
     if expr.startswith("f2i:"):
         fn = expr[4:]
+        n = SIZE[sk]
         if fn == "trunc":
-            return "%s = trunc(%s);" % (r3, r2)
-        return "local t:%d = %s(%s); %s = trunc(t);" % (8 if sk == "D" else 4, fn, r2, r3)
+            y = "y"
+            pre = "local y:%d = %s;" % (n, r2)  # trunc() itself rounds toward zero
+        else:
+            y = "y"
+            pre = "local y:%d = %s(%s);" % (n, fn, r2)
+        if not (dk == "D" and uns):
+            return "%s = trunc(%s);" % (r3, r2) if fn == "trunc" else "%s %s = trunc(y);" % (pre, r3)
+        return " ".join([consts(n), pre, to_int(y, r3, n, dk, uns)])
     if expr == "i2f":
-        return "%s = int2float(%s);" % (r3, r2)
+        return int_to_float(r2, r3, sk, dk, False)
     if expr == "u2f":
-        # unsigned source: widen with a zero extension first
-        w = 16 if sk == "D" else 8
-        return "local u:%d = zext(%s); %s = int2float(u);" % (w, r2, r3)
+        # unsigned source: widened with a zero extension first
+        return int_to_float(r2, r3, sk, dk, True)
     if expr == "f2f":
-        return "%s = float2float(%s);" % (r3, r2)
+        if SIZE[sk] < SIZE[dk]:
+            return "%s = float2float(%s);" % (r3, r2)  # widening is exact
+        # narrowing: compare the nearest result, widened back (exact), with the source
+        return " ".join(["local r:4 = float2float(%s); local b:8 = float2float(r);" % r2,
+                         "local gt:1 = b f> %s; local lt:1 = b f< %s;" % (r2, r2),
+                         directed("r", 4, "gt", "lt", "%s f> int2float(0:4)" % r2, "%s f< int2float(0:4)" % r2),
+                         "%s = r;" % r3])
     if expr == "h2s":
         return "%s = __float_half_to_single(%s);" % (r3, r2)
     if expr == "s2h":
@@ -134,10 +221,13 @@ def emit(name, sub, sec, kinds, dk, expr, avail):
         r3 = REG[dk][2]
         disp = "%s %s, %s" % (name, r2, r3)
         pat = "%s & op0510=0x3F & op0004=0x%x; %s & op2126=0x%x & op1620=0x%x" % (r2, sub, r3, sec >> 5, sec & 0x1f)
-        b = body(expr, (None, r2, r3), r3, sk, dk)
+        b = body(expr, (None, r2, r3), r3, sk, dk, uns=(sub & 0x10) != 0 and name[-2:] in ("uw", "ul"))
     return ":%s is %s {\n\t%s\n}" % (disp, pat, b)
 
 
+# the V850E1 language (V850E1/V850E/V850ES) has no FPU: everything below is V850E2V3 and up
+L.append("@ifndef V850E1")
+L.append("")
 for avail in ("all", "e2", "e3"):
     if avail == "e2":
         L.append("@ifdef V850E2M")
@@ -189,6 +279,7 @@ L.append("""# CMOVF.S/D fcbit, reg1, reg2, reg3: reg3 = CC[fcbit] ? reg1 : reg2
 }
 @endif
 
+@endif # V850E1
 """)
 with open(OUT, "w") as f:
     f.write("\n".join(L))

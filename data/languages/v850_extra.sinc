@@ -18,7 +18,9 @@ define pcodeop __acc_store_lo;
 
 # DBTRAP, RMTRAP: debug / recovery traps
 :dbtrap is op0015=0xF840 { __dbtrap(); }
+@ifndef V850E1
 :rmtrap is op0015=0xF040 { __rmtrap(); }
+@endif
 
 # DBRET: return from debug mode
 :dbret is op0015=0x07E0; op1631=0x0146 {
@@ -55,8 +57,18 @@ divsteps: n is op1821 [ n = 32 - (op1821 * 2); ] { export *[const]:1 n; }
 }
 
 # accumulator extension
+@ifndef V850E1
 :ldacc R0004, R1115 is op0510=0x3F & R0004 & R1115; op1631=0x0BC4 { __acc_load(R0004, R1115); }
+@endif
+@ifndef V850E1
 :macacc R0004, R1115 is op0510=0x3F & R0004 & R1115; op1631=0x0BC0 { __acc_mac(R0004, R1115); }
+@endif
+@ifndef V850E1
 :macuacc R0004, R1115 is op0510=0x3F & R0004 & R1115; op1631=0x0BC2 { __acc_macu(R0004, R1115); }
+@endif
+@ifndef V850E1
 :stacch R1115 is op0010=0x07E0 & R1115; op1631=0x0BCA { R1115 = __acc_store_hi(); }
+@endif
+@ifndef V850E1
 :staccl R1115 is op0010=0x07E0 & R1115; op1631=0x0BC8 { R1115 = __acc_store_lo(); }
+@endif

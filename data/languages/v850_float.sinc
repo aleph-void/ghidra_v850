@@ -23,6 +23,8 @@ attach names [fcond2730]
   ["f/t" "un/or" "eq/neq" "ueq/ogl" "olt/uge" "ult/oge" "ole/ugt" "ule/ogt"
    "sf/st" "ngle/gle" "seq/sne" "ngl/gl" "lt/nlt" "nge/ge" "le/nle" "ngt/gt"];
 
+@ifndef V850E1
+
 :addf.d D0004, D1115, D2731 is D1115 & op0510=0x3F & D0004; D2731 & op2126=0x23 & op1620=0x10 {
 	D2731 = D1115 f+ D0004;
 }
@@ -90,28 +92,28 @@ attach names [fcond2730]
 	local one:4 = int2float(1:4); R2731 = one f/ sqrt(R1115);
 }
 :roundf.sw R1115, R2731 is R1115 & op0510=0x3F & op0004=0x0; R2731 & op2126=0x22 & op1620=0x0 {
-	local t:4 = round(R1115); R2731 = trunc(t);
+	local y:4 = round(R1115); R2731 = trunc(y);
 }
 :roundf.suw R1115, R2731 is R1115 & op0510=0x3F & op0004=0x10; R2731 & op2126=0x22 & op1620=0x0 {
-	local t:4 = round(R1115); R2731 = trunc(t);
+	local y:4 = round(R1115); R2731 = trunc(y);
 }
 :roundf.sl R1115, D2731 is R1115 & op0510=0x3F & op0004=0x0; D2731 & op2126=0x22 & op1620=0x4 {
-	local t:4 = round(R1115); D2731 = trunc(t);
+	local y:4 = round(R1115); D2731 = trunc(y);
 }
 :roundf.sul R1115, D2731 is R1115 & op0510=0x3F & op0004=0x10; D2731 & op2126=0x22 & op1620=0x4 {
-	local t:4 = round(R1115); D2731 = trunc(t);
+	local one:4 = int2float(1:4); local two:4 = one f+ one; local half:4 = one f/ two; local c63:4 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local y:4 = round(R1115); if (y f>= c63) goto <hi>; D2731 = trunc(y); goto <ok>; <hi> local yh:4 = y f- c63; D2731 = trunc(yh); D2731 = D2731 + 0x8000000000000000; <ok>
 }
 :roundf.dw D1115, R2731 is D1115 & op0510=0x3F & op0004=0x0; R2731 & op2126=0x22 & op1620=0x10 {
-	local t:8 = round(D1115); R2731 = trunc(t);
+	local y:8 = round(D1115); R2731 = trunc(y);
 }
 :roundf.duw D1115, R2731 is D1115 & op0510=0x3F & op0004=0x10; R2731 & op2126=0x22 & op1620=0x10 {
-	local t:8 = round(D1115); R2731 = trunc(t);
+	local y:8 = round(D1115); R2731 = trunc(y);
 }
 :roundf.dl D1115, D2731 is D1115 & op0510=0x3F & op0004=0x0; D2731 & op2126=0x22 & op1620=0x14 {
-	local t:8 = round(D1115); D2731 = trunc(t);
+	local y:8 = round(D1115); D2731 = trunc(y);
 }
 :roundf.dul D1115, D2731 is D1115 & op0510=0x3F & op0004=0x10; D2731 & op2126=0x22 & op1620=0x14 {
-	local t:8 = round(D1115); D2731 = trunc(t);
+	local one:8 = int2float(1:4); local two:8 = one f+ one; local half:8 = one f/ two; local c63:8 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local y:8 = round(D1115); if (y f>= c63) goto <hi>; D2731 = trunc(y); goto <ok>; <hi> local yh:8 = y f- c63; D2731 = trunc(yh); D2731 = D2731 + 0x8000000000000000; <ok>
 }
 :trncf.sw R1115, R2731 is R1115 & op0510=0x3F & op0004=0x1; R2731 & op2126=0x22 & op1620=0x0 {
 	R2731 = trunc(R1115);
@@ -123,7 +125,7 @@ attach names [fcond2730]
 	D2731 = trunc(R1115);
 }
 :trncf.sul R1115, D2731 is R1115 & op0510=0x3F & op0004=0x11; D2731 & op2126=0x22 & op1620=0x4 {
-	D2731 = trunc(R1115);
+	local one:4 = int2float(1:4); local two:4 = one f+ one; local half:4 = one f/ two; local c63:4 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local y:4 = R1115; if (y f>= c63) goto <hi>; D2731 = trunc(y); goto <ok>; <hi> local yh:4 = y f- c63; D2731 = trunc(yh); D2731 = D2731 + 0x8000000000000000; <ok>
 }
 :trncf.dw D1115, R2731 is D1115 & op0510=0x3F & op0004=0x1; R2731 & op2126=0x22 & op1620=0x10 {
 	R2731 = trunc(D1115);
@@ -135,109 +137,109 @@ attach names [fcond2730]
 	D2731 = trunc(D1115);
 }
 :trncf.dul D1115, D2731 is D1115 & op0510=0x3F & op0004=0x11; D2731 & op2126=0x22 & op1620=0x14 {
-	D2731 = trunc(D1115);
+	local one:8 = int2float(1:4); local two:8 = one f+ one; local half:8 = one f/ two; local c63:8 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local y:8 = D1115; if (y f>= c63) goto <hi>; D2731 = trunc(y); goto <ok>; <hi> local yh:8 = y f- c63; D2731 = trunc(yh); D2731 = D2731 + 0x8000000000000000; <ok>
 }
 :ceilf.sw R1115, R2731 is R1115 & op0510=0x3F & op0004=0x2; R2731 & op2126=0x22 & op1620=0x0 {
-	local t:4 = ceil(R1115); R2731 = trunc(t);
+	local y:4 = ceil(R1115); R2731 = trunc(y);
 }
 :ceilf.suw R1115, R2731 is R1115 & op0510=0x3F & op0004=0x12; R2731 & op2126=0x22 & op1620=0x0 {
-	local t:4 = ceil(R1115); R2731 = trunc(t);
+	local y:4 = ceil(R1115); R2731 = trunc(y);
 }
 :ceilf.sl R1115, D2731 is R1115 & op0510=0x3F & op0004=0x2; D2731 & op2126=0x22 & op1620=0x4 {
-	local t:4 = ceil(R1115); D2731 = trunc(t);
+	local y:4 = ceil(R1115); D2731 = trunc(y);
 }
 :ceilf.sul R1115, D2731 is R1115 & op0510=0x3F & op0004=0x12; D2731 & op2126=0x22 & op1620=0x4 {
-	local t:4 = ceil(R1115); D2731 = trunc(t);
+	local one:4 = int2float(1:4); local two:4 = one f+ one; local half:4 = one f/ two; local c63:4 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local y:4 = ceil(R1115); if (y f>= c63) goto <hi>; D2731 = trunc(y); goto <ok>; <hi> local yh:4 = y f- c63; D2731 = trunc(yh); D2731 = D2731 + 0x8000000000000000; <ok>
 }
 :ceilf.dw D1115, R2731 is D1115 & op0510=0x3F & op0004=0x2; R2731 & op2126=0x22 & op1620=0x10 {
-	local t:8 = ceil(D1115); R2731 = trunc(t);
+	local y:8 = ceil(D1115); R2731 = trunc(y);
 }
 :ceilf.duw D1115, R2731 is D1115 & op0510=0x3F & op0004=0x12; R2731 & op2126=0x22 & op1620=0x10 {
-	local t:8 = ceil(D1115); R2731 = trunc(t);
+	local y:8 = ceil(D1115); R2731 = trunc(y);
 }
 :ceilf.dl D1115, D2731 is D1115 & op0510=0x3F & op0004=0x2; D2731 & op2126=0x22 & op1620=0x14 {
-	local t:8 = ceil(D1115); D2731 = trunc(t);
+	local y:8 = ceil(D1115); D2731 = trunc(y);
 }
 :ceilf.dul D1115, D2731 is D1115 & op0510=0x3F & op0004=0x12; D2731 & op2126=0x22 & op1620=0x14 {
-	local t:8 = ceil(D1115); D2731 = trunc(t);
+	local one:8 = int2float(1:4); local two:8 = one f+ one; local half:8 = one f/ two; local c63:8 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local y:8 = ceil(D1115); if (y f>= c63) goto <hi>; D2731 = trunc(y); goto <ok>; <hi> local yh:8 = y f- c63; D2731 = trunc(yh); D2731 = D2731 + 0x8000000000000000; <ok>
 }
 :floorf.sw R1115, R2731 is R1115 & op0510=0x3F & op0004=0x3; R2731 & op2126=0x22 & op1620=0x0 {
-	local t:4 = floor(R1115); R2731 = trunc(t);
+	local y:4 = floor(R1115); R2731 = trunc(y);
 }
 :floorf.suw R1115, R2731 is R1115 & op0510=0x3F & op0004=0x13; R2731 & op2126=0x22 & op1620=0x0 {
-	local t:4 = floor(R1115); R2731 = trunc(t);
+	local y:4 = floor(R1115); R2731 = trunc(y);
 }
 :floorf.sl R1115, D2731 is R1115 & op0510=0x3F & op0004=0x3; D2731 & op2126=0x22 & op1620=0x4 {
-	local t:4 = floor(R1115); D2731 = trunc(t);
+	local y:4 = floor(R1115); D2731 = trunc(y);
 }
 :floorf.sul R1115, D2731 is R1115 & op0510=0x3F & op0004=0x13; D2731 & op2126=0x22 & op1620=0x4 {
-	local t:4 = floor(R1115); D2731 = trunc(t);
+	local one:4 = int2float(1:4); local two:4 = one f+ one; local half:4 = one f/ two; local c63:4 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local y:4 = floor(R1115); if (y f>= c63) goto <hi>; D2731 = trunc(y); goto <ok>; <hi> local yh:4 = y f- c63; D2731 = trunc(yh); D2731 = D2731 + 0x8000000000000000; <ok>
 }
 :floorf.dw D1115, R2731 is D1115 & op0510=0x3F & op0004=0x3; R2731 & op2126=0x22 & op1620=0x10 {
-	local t:8 = floor(D1115); R2731 = trunc(t);
+	local y:8 = floor(D1115); R2731 = trunc(y);
 }
 :floorf.duw D1115, R2731 is D1115 & op0510=0x3F & op0004=0x13; R2731 & op2126=0x22 & op1620=0x10 {
-	local t:8 = floor(D1115); R2731 = trunc(t);
+	local y:8 = floor(D1115); R2731 = trunc(y);
 }
 :floorf.dl D1115, D2731 is D1115 & op0510=0x3F & op0004=0x3; D2731 & op2126=0x22 & op1620=0x14 {
-	local t:8 = floor(D1115); D2731 = trunc(t);
+	local y:8 = floor(D1115); D2731 = trunc(y);
 }
 :floorf.dul D1115, D2731 is D1115 & op0510=0x3F & op0004=0x13; D2731 & op2126=0x22 & op1620=0x14 {
-	local t:8 = floor(D1115); D2731 = trunc(t);
+	local one:8 = int2float(1:4); local two:8 = one f+ one; local half:8 = one f/ two; local c63:8 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local y:8 = floor(D1115); if (y f>= c63) goto <hi>; D2731 = trunc(y); goto <ok>; <hi> local yh:8 = y f- c63; D2731 = trunc(yh); D2731 = D2731 + 0x8000000000000000; <ok>
 }
 :cvtf.sw R1115, R2731 is R1115 & op0510=0x3F & op0004=0x4; R2731 & op2126=0x22 & op1620=0x0 {
-	local t:4 = round(R1115); R2731 = trunc(t);
+	local one:4 = int2float(1:4); local two:4 = one f+ one; local half:4 = one f/ two; local c63:4 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local rm:4 = (FPSR >> 18) & 3; local fl:4 = floor(R1115); local y:4 = fl; if (rm != 0) goto <dir>; local fr:4 = R1115 f- fl; if (fr f< half) goto <rd>; local hf:4 = fl f/ two; local odd:1 = floor(hf) f!= hf; if (fr f== half && !odd) goto <rd>; y = fl f+ one; goto <rd>; <dir> if (rm == 3) goto <rd>; y = ceil(R1115); if (rm == 2) goto <rd>; if (R1115 f< int2float(0:4)) goto <rd>; y = fl; <rd> R2731 = trunc(y);
 }
 :cvtf.suw R1115, R2731 is R1115 & op0510=0x3F & op0004=0x14; R2731 & op2126=0x22 & op1620=0x0 {
-	local t:4 = round(R1115); R2731 = trunc(t);
+	local one:4 = int2float(1:4); local two:4 = one f+ one; local half:4 = one f/ two; local c63:4 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local rm:4 = (FPSR >> 18) & 3; local fl:4 = floor(R1115); local y:4 = fl; if (rm != 0) goto <dir>; local fr:4 = R1115 f- fl; if (fr f< half) goto <rd>; local hf:4 = fl f/ two; local odd:1 = floor(hf) f!= hf; if (fr f== half && !odd) goto <rd>; y = fl f+ one; goto <rd>; <dir> if (rm == 3) goto <rd>; y = ceil(R1115); if (rm == 2) goto <rd>; if (R1115 f< int2float(0:4)) goto <rd>; y = fl; <rd> R2731 = trunc(y);
 }
 :cvtf.sl R1115, D2731 is R1115 & op0510=0x3F & op0004=0x4; D2731 & op2126=0x22 & op1620=0x4 {
-	local t:4 = round(R1115); D2731 = trunc(t);
+	local one:4 = int2float(1:4); local two:4 = one f+ one; local half:4 = one f/ two; local c63:4 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local rm:4 = (FPSR >> 18) & 3; local fl:4 = floor(R1115); local y:4 = fl; if (rm != 0) goto <dir>; local fr:4 = R1115 f- fl; if (fr f< half) goto <rd>; local hf:4 = fl f/ two; local odd:1 = floor(hf) f!= hf; if (fr f== half && !odd) goto <rd>; y = fl f+ one; goto <rd>; <dir> if (rm == 3) goto <rd>; y = ceil(R1115); if (rm == 2) goto <rd>; if (R1115 f< int2float(0:4)) goto <rd>; y = fl; <rd> D2731 = trunc(y);
 }
 :cvtf.sul R1115, D2731 is R1115 & op0510=0x3F & op0004=0x14; D2731 & op2126=0x22 & op1620=0x4 {
-	local t:4 = round(R1115); D2731 = trunc(t);
+	local one:4 = int2float(1:4); local two:4 = one f+ one; local half:4 = one f/ two; local c63:4 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local rm:4 = (FPSR >> 18) & 3; local fl:4 = floor(R1115); local y:4 = fl; if (rm != 0) goto <dir>; local fr:4 = R1115 f- fl; if (fr f< half) goto <rd>; local hf:4 = fl f/ two; local odd:1 = floor(hf) f!= hf; if (fr f== half && !odd) goto <rd>; y = fl f+ one; goto <rd>; <dir> if (rm == 3) goto <rd>; y = ceil(R1115); if (rm == 2) goto <rd>; if (R1115 f< int2float(0:4)) goto <rd>; y = fl; <rd> if (y f>= c63) goto <hi>; D2731 = trunc(y); goto <ok>; <hi> local yh:4 = y f- c63; D2731 = trunc(yh); D2731 = D2731 + 0x8000000000000000; <ok>
 }
 :cvtf.dw D1115, R2731 is D1115 & op0510=0x3F & op0004=0x4; R2731 & op2126=0x22 & op1620=0x10 {
-	local t:8 = round(D1115); R2731 = trunc(t);
+	local one:8 = int2float(1:4); local two:8 = one f+ one; local half:8 = one f/ two; local c63:8 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local rm:4 = (FPSR >> 18) & 3; local fl:8 = floor(D1115); local y:8 = fl; if (rm != 0) goto <dir>; local fr:8 = D1115 f- fl; if (fr f< half) goto <rd>; local hf:8 = fl f/ two; local odd:1 = floor(hf) f!= hf; if (fr f== half && !odd) goto <rd>; y = fl f+ one; goto <rd>; <dir> if (rm == 3) goto <rd>; y = ceil(D1115); if (rm == 2) goto <rd>; if (D1115 f< int2float(0:4)) goto <rd>; y = fl; <rd> R2731 = trunc(y);
 }
 :cvtf.duw D1115, R2731 is D1115 & op0510=0x3F & op0004=0x14; R2731 & op2126=0x22 & op1620=0x10 {
-	local t:8 = round(D1115); R2731 = trunc(t);
+	local one:8 = int2float(1:4); local two:8 = one f+ one; local half:8 = one f/ two; local c63:8 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local rm:4 = (FPSR >> 18) & 3; local fl:8 = floor(D1115); local y:8 = fl; if (rm != 0) goto <dir>; local fr:8 = D1115 f- fl; if (fr f< half) goto <rd>; local hf:8 = fl f/ two; local odd:1 = floor(hf) f!= hf; if (fr f== half && !odd) goto <rd>; y = fl f+ one; goto <rd>; <dir> if (rm == 3) goto <rd>; y = ceil(D1115); if (rm == 2) goto <rd>; if (D1115 f< int2float(0:4)) goto <rd>; y = fl; <rd> R2731 = trunc(y);
 }
 :cvtf.dl D1115, D2731 is D1115 & op0510=0x3F & op0004=0x4; D2731 & op2126=0x22 & op1620=0x14 {
-	local t:8 = round(D1115); D2731 = trunc(t);
+	local one:8 = int2float(1:4); local two:8 = one f+ one; local half:8 = one f/ two; local c63:8 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local rm:4 = (FPSR >> 18) & 3; local fl:8 = floor(D1115); local y:8 = fl; if (rm != 0) goto <dir>; local fr:8 = D1115 f- fl; if (fr f< half) goto <rd>; local hf:8 = fl f/ two; local odd:1 = floor(hf) f!= hf; if (fr f== half && !odd) goto <rd>; y = fl f+ one; goto <rd>; <dir> if (rm == 3) goto <rd>; y = ceil(D1115); if (rm == 2) goto <rd>; if (D1115 f< int2float(0:4)) goto <rd>; y = fl; <rd> D2731 = trunc(y);
 }
 :cvtf.dul D1115, D2731 is D1115 & op0510=0x3F & op0004=0x14; D2731 & op2126=0x22 & op1620=0x14 {
-	local t:8 = round(D1115); D2731 = trunc(t);
+	local one:8 = int2float(1:4); local two:8 = one f+ one; local half:8 = one f/ two; local c63:8 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local rm:4 = (FPSR >> 18) & 3; local fl:8 = floor(D1115); local y:8 = fl; if (rm != 0) goto <dir>; local fr:8 = D1115 f- fl; if (fr f< half) goto <rd>; local hf:8 = fl f/ two; local odd:1 = floor(hf) f!= hf; if (fr f== half && !odd) goto <rd>; y = fl f+ one; goto <rd>; <dir> if (rm == 3) goto <rd>; y = ceil(D1115); if (rm == 2) goto <rd>; if (D1115 f< int2float(0:4)) goto <rd>; y = fl; <rd> if (y f>= c63) goto <hi>; D2731 = trunc(y); goto <ok>; <hi> local yh:8 = y f- c63; D2731 = trunc(yh); D2731 = D2731 + 0x8000000000000000; <ok>
 }
 :cvtf.ws R1115, R2731 is R1115 & op0510=0x3F & op0004=0x0; R2731 & op2126=0x22 & op1620=0x2 {
-	R2731 = int2float(R1115);
+	local r:4 = int2float(R1115); local t:8 = trunc(r); local x:8 = sext(R1115); local gt:1 = t s> x; local lt:1 = t s< x; local rm:4 = (FPSR >> 18) & 3; local dn:1 = (gt) && (rm == 3 || (rm == 1 && (R1115 s> 0))); local up:1 = (lt) && (rm == 2 || (rm == 1 && (R1115 s< 0))); local sg:4 = zext((r >> 31) != 0); r = r + zext(dn) * (sg * 2 - 1) + zext(up) * (1 - sg * 2); R2731 = r;
 }
 :cvtf.uws R1115, R2731 is R1115 & op0510=0x3F & op0004=0x10; R2731 & op2126=0x22 & op1620=0x2 {
-	local u:8 = zext(R1115); R2731 = int2float(u);
+	local u:8 = zext(R1115); local r:4 = int2float(u); local t:8 = trunc(r); local x:8 = zext(R1115); local gt:1 = t s> x; local lt:1 = t s< x; local rm:4 = (FPSR >> 18) & 3; local dn:1 = (gt) && (rm == 3 || (rm == 1 && (R1115 != 0))); local up:1 = (lt) && (rm == 2 || (rm == 1 && (0))); local sg:4 = zext((r >> 31) != 0); r = r + zext(dn) * (sg * 2 - 1) + zext(up) * (1 - sg * 2); R2731 = r;
 }
 :cvtf.ls D1115, R2731 is D1115 & op0510=0x3F & op0004=0x1; R2731 & op2126=0x22 & op1620=0x2 {
-	R2731 = int2float(D1115);
+	local r:4 = int2float(D1115); local one:4 = int2float(1:4); local two:4 = one f+ one; local half:4 = one f/ two; local c63:4 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local gt:1 = r f>= c63; local lt:1 = 0; if (gt) goto <big>; local t:8 = trunc(r); gt = t s> D1115; lt = t s< D1115; <big> local rm:4 = (FPSR >> 18) & 3; local dn:1 = (gt) && (rm == 3 || (rm == 1 && (D1115 s> 0))); local up:1 = (lt) && (rm == 2 || (rm == 1 && (D1115 s< 0))); local sg:4 = zext((r >> 31) != 0); r = r + zext(dn) * (sg * 2 - 1) + zext(up) * (1 - sg * 2); R2731 = r;
 }
 :cvtf.uls D1115, R2731 is D1115 & op0510=0x3F & op0004=0x11; R2731 & op2126=0x22 & op1620=0x2 {
-	local u:16 = zext(D1115); R2731 = int2float(u);
+	local u:16 = zext(D1115); local r:4 = int2float(u); local one:4 = int2float(1:4); local two:4 = one f+ one; local half:4 = one f/ two; local c63:4 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local gt:1 = 0; local lt:1 = 0; local t:8 = 0; if (r f>= c63) goto <big>; t = trunc(r); goto <cmp>; <big> gt = r f>= (c63 f+ c63); if (gt) goto <done>; local rh:4 = r f- c63; t = trunc(rh); t = t + 0x8000000000000000; <cmp> gt = t > D1115; lt = t < D1115; <done> local rm:4 = (FPSR >> 18) & 3; local dn:1 = (gt) && (rm == 3 || (rm == 1 && (D1115 != 0))); local up:1 = (lt) && (rm == 2 || (rm == 1 && (0))); local sg:4 = zext((r >> 31) != 0); r = r + zext(dn) * (sg * 2 - 1) + zext(up) * (1 - sg * 2); R2731 = r;
 }
 :cvtf.wd R1115, D2731 is R1115 & op0510=0x3F & op0004=0x0; D2731 & op2126=0x22 & op1620=0x12 {
-	D2731 = int2float(R1115);
+	local r:8 = int2float(R1115); D2731 = r;
 }
 :cvtf.uwd R1115, D2731 is R1115 & op0510=0x3F & op0004=0x10; D2731 & op2126=0x22 & op1620=0x12 {
-	local u:8 = zext(R1115); D2731 = int2float(u);
+	local u:8 = zext(R1115); local r:8 = int2float(u); D2731 = r;
 }
 :cvtf.ld D1115, D2731 is D1115 & op0510=0x3F & op0004=0x1; D2731 & op2126=0x22 & op1620=0x12 {
-	D2731 = int2float(D1115);
+	local r:8 = int2float(D1115); local one:8 = int2float(1:4); local two:8 = one f+ one; local half:8 = one f/ two; local c63:8 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local gt:1 = r f>= c63; local lt:1 = 0; if (gt) goto <big>; local t:8 = trunc(r); gt = t s> D1115; lt = t s< D1115; <big> local rm:4 = (FPSR >> 18) & 3; local dn:1 = (gt) && (rm == 3 || (rm == 1 && (D1115 s> 0))); local up:1 = (lt) && (rm == 2 || (rm == 1 && (D1115 s< 0))); local sg:8 = zext((r >> 63) != 0); r = r + zext(dn) * (sg * 2 - 1) + zext(up) * (1 - sg * 2); D2731 = r;
 }
 :cvtf.uld D1115, D2731 is D1115 & op0510=0x3F & op0004=0x11; D2731 & op2126=0x22 & op1620=0x12 {
-	local u:16 = zext(D1115); D2731 = int2float(u);
+	local u:16 = zext(D1115); local r:8 = int2float(u); local one:8 = int2float(1:4); local two:8 = one f+ one; local half:8 = one f/ two; local c63:8 = int2float(0x4000000000000000:8); c63 = c63 f+ c63; local gt:1 = 0; local lt:1 = 0; local t:8 = 0; if (r f>= c63) goto <big>; t = trunc(r); goto <cmp>; <big> gt = r f>= (c63 f+ c63); if (gt) goto <done>; local rh:8 = r f- c63; t = trunc(rh); t = t + 0x8000000000000000; <cmp> gt = t > D1115; lt = t < D1115; <done> local rm:4 = (FPSR >> 18) & 3; local dn:1 = (gt) && (rm == 3 || (rm == 1 && (D1115 != 0))); local up:1 = (lt) && (rm == 2 || (rm == 1 && (0))); local sg:8 = zext((r >> 63) != 0); r = r + zext(dn) * (sg * 2 - 1) + zext(up) * (1 - sg * 2); D2731 = r;
 }
 :cvtf.sd R1115, D2731 is R1115 & op0510=0x3F & op0004=0x2; D2731 & op2126=0x22 & op1620=0x12 {
 	D2731 = float2float(R1115);
 }
 :cvtf.ds D1115, R2731 is D1115 & op0510=0x3F & op0004=0x3; R2731 & op2126=0x22 & op1620=0x12 {
-	R2731 = float2float(D1115);
+	local r:4 = float2float(D1115); local b:8 = float2float(r); local gt:1 = b f> D1115; local lt:1 = b f< D1115; local rm:4 = (FPSR >> 18) & 3; local dn:1 = (gt) && (rm == 3 || (rm == 1 && (D1115 f> int2float(0:4)))); local up:1 = (lt) && (rm == 2 || (rm == 1 && (D1115 f< int2float(0:4)))); local sg:4 = zext((r >> 31) != 0); r = r + zext(dn) * (sg * 2 - 1) + zext(up) * (1 - sg * 2); R2731 = r;
 }
 
 @ifdef V850E2M
@@ -285,3 +287,4 @@ attach names [fcond2730]
 }
 @endif
 
+@endif # V850E1

@@ -65,26 +65,32 @@ macro shift_left (res, _val, _shift) {
 :shr R0004, R1115 is op0510=0x3F & R0004 & R1115; op1631=0x80 {
 	shift_right_u (R1115, R1115, R0004);
 }
+@ifndef V850E1
 # SHR reg1, reg2, reg3
 :shr R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op1626=0x82 & R2731 {
 	shift_right_u (R2731, R1115, R0004);
 }
+@endif
 # SAR reg1, reg2
 :sar R0004, R1115 is op0510=0x3F & R0004 & R1115; op1631=0xA0 {
 	shift_right_s (R1115, R1115, R0004);
 }
+@ifndef V850E1
 # SAR reg1, reg2, reg3
 :sar R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op1626=0xA2 & R2731 {
 	shift_right_s (R2731, R1115, R0004);
 }
+@endif
 # SHL reg1, reg2
 :shl R0004, R1115 is op0510=0x3F & R0004 & R1115; op1631=0xC0 {
 	shift_left (R1115, R1115, R0004);
 }
+@ifndef V850E1
 # SHL reg1, reg2, reg3
 :shl R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op1626=0xC2 & R2731 {
 	shift_left (R2731, R1115, R0004);
 }
+@endif
 
 # BSW reg2, reg3
 :bsw R1115, R2731 is op0010=0x7E0 & R1115; op1626=0x340 & R2731 {
@@ -116,12 +122,14 @@ macro shift_left (res, _val, _shift) {
 	set_C ((x0 == 0) || (x1 == 0));
 }
 # HSH reg2, reg3
+@ifndef V850E1
 :hsh R1115, R2731 is op0010=0x7E0 & R1115; op1626=0x346 & R2731 {
 	local x0 = R1115[0,16];
 	R2731 = R1115;
 	set_nOV_S_Z (R2731);
 	set_C (x0 == 0);
 }
+@endif
 
 # SCH0R/SCH1R/SCH0L/SCH1L: reg3 = position (1-32) of the first 0/1 bit searched from the right
 # or left, 0 if there is none; Z = none found, CY = found at the last position, OV = S = 0.
@@ -142,28 +150,36 @@ macro search_left(pos, x) {
 }
 
 # SCH0R reg2, reg3
+@ifndef V850E1
 :sch0r R1115, R2731 is op0010=0x7E0 & R1115; op1626=0x360 & R2731 {
 	local x:4 = ~R1115; local pos:4 = 0;
 	search_right(pos, x);
 	R2731 = pos;
 }
+@endif
 # SCH1R reg2, reg3
+@ifndef V850E1
 :sch1r R1115, R2731 is op0010=0x7E0 & R1115; op1626=0x362 & R2731 {
 	local x:4 = R1115; local pos:4 = 0;
 	search_right(pos, x);
 	R2731 = pos;
 }
+@endif
 # SCH0L reg2, reg3
+@ifndef V850E1
 :sch0l R1115, R2731 is op0010=0x7E0 & R1115; op1626=0x364 & R2731 {
 	local x:4 = ~R1115; local pos:4 = 0;
 	search_left(pos, x);
 	R2731 = pos;
 }
+@endif
 # SCH1L reg2, reg3
+@ifndef V850E1
 :sch1l R1115, R2731 is op0010=0x7E0 & R1115; op1626=0x366 & R2731 {
 	local x:4 = R1115; local pos:4 = 0;
 	search_left(pos, x);
 	R2731 = pos;
 }
+@endif
 
 

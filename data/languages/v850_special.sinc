@@ -11,30 +11,48 @@
 }
 
 # SYNCE
+@ifndef V850E1
 :synce is op0015=0x001D {
 	__synchronize();
 }
+@endif
 # SYNCM
+@ifndef V850E1
 :syncm is op0015=0x001E {
 	__synchronize();
 }
+@endif
 # SYNCP
+@ifndef V850E1
 :syncp is op0015=0x001F {
 	__synchronize();
 }
+@endif
 
 # RIE
+@ifndef V850E1
 :rie is op0015=0x0040 unimpl # reserved instruction for future expansion
+@endif
 
-# SWITCH reg1
+# SWITCH reg1 (reg1 = r0 is reserved before V850E2; there 0x0040 is FETRAP's space)
+@ifdef V850E1
+:switch R0004 is op0515=0x002 & R0004 & op0004!=0 {
+	local lbl:4 = inst_next + (R0004 << 1);
+	local addr:4 = inst_next + (sext(*:2 lbl) << 1);
+	PC = addr;
+	goto [addr];
+}
+@else
 :switch R0004 is op0515=0x002 & R0004 {
 	local lbl:4 = inst_next + (R0004 << 1);
 	local addr:4 = inst_next + (sext(*:2 lbl) << 1);
 	PC = addr;
 	goto [addr];
 }
+@endif
 
 # FETRAP vector4
+@ifndef V850E1
 :fetrap op1114 is op0010=0x040 & op1515=0 & op1114 & op1115!=0 {
 	FEPC = inst_next;
 	FEPSW = PSW;
@@ -47,6 +65,7 @@
 	PC = 0x30;
 	goto [PC];
 }
+@endif
 
 # CALLT imm6
 :callt op0005 is op0615=0x008 & op0005 {
@@ -59,7 +78,9 @@
 }
 
 # RIE imm5, imm4
+@ifndef V850E1
 :rie op1115, op0003 is op0410=0x7F & op1115 & op0003; op1631=0 unimpl # reserved instruction for future expansion
+@endif
 
 @if defined(V850E3)
 # LDSR reg2, regID, selID (selID 0)
@@ -82,6 +103,7 @@
 @endif
 
 # CAXI [reg1], reg2, reg3
+@ifndef V850E1
 :caxi [R0004], R1115, R2731 is op0510=0x3F & R0004 & R1115; op1626=0xEE & R2731 {
 	local token = *:4 R0004;
 	local result = R1115 - token;
@@ -90,6 +112,7 @@
 	R2731 = token;
 	flags_sub(R1115, token);
 }
+@endif
 
 # TRAP imm5
 :trap op0004 is op0515=0x3F & op0004; op1631=0x0100 {
@@ -132,17 +155,21 @@
 	return [PC];
 }
 # EIRET
+@ifndef V850E1
 :eiret is op0515=0x3F; op1631=0x0148 {
 	PC = EIPC;
 	PSW = EIPSW;
 	return [PC];
 }
+@endif
 # FERET
+@ifndef V850E1
 :feret is op0515=0x3F; op1631=0x014A {
 	PC = FEPC;
 	PSW = FEPSW;
 	return [PC];
 }
+@endif
 
 # DI
 :di is op0015=0x07E0; op1631=0x0160 {
@@ -156,6 +183,7 @@
 }
 
 # SYSCALL vector8
+@ifndef V850E1
 :syscall vector8 is op0515=0x6BF & op0004; op3031=0 & op2729 & op1626=0x160 
 [ vector8 = (op2729 << 5) | op0004; ] {
 	EIPC = inst_next;
@@ -170,4 +198,5 @@
 	PC = SCBP + (*:4 addr);
 	call [PC];
 }
+@endif
 

@@ -205,6 +205,7 @@ macro saturate(value) {
 	R2731 = mod;
 }
 # DIVQ reg1, reg2, reg3
+@ifndef V850E1
 :divq R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op1626=0x2FC & R2731 {
 	local quot:4 = R1115 s/ R0004;
 	local mod:4 = R1115 s% R0004;
@@ -213,6 +214,7 @@ macro saturate(value) {
 	R1115 = quot;
 	R2731 = mod;
 }
+@endif
 # DIVU reg1, reg2, reg3
 :divu R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op1626=0x2C2 & R2731 {
 	local quot:4 = R1115 / R0004;
@@ -223,6 +225,7 @@ macro saturate(value) {
 	R2731 = mod;
 }
 # DIVQU reg1, reg2, reg3
+@ifndef V850E1
 :divqu R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op1626=0x2FE & R2731 {
 	local quot:4 = R1115 / R0004;
 	local mod:4 = R1115 % R0004;
@@ -231,7 +234,9 @@ macro saturate(value) {
 	R1115 = quot;
 	R2731 = mod;
 }
+@endif
 
+@ifndef V850E1
 # SATSUB reg1, reg2, reg3
 :satsub R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op1626=0x39A & R2731 {
 	local res:5 = sext(R1115) - sext(R0004);
@@ -240,7 +245,9 @@ macro saturate(value) {
 	saturate(res);
 	R2731 = res:4;
 }
+@endif
 
+@ifndef V850E1
 # SATADD reg1, reg2, reg3
 :satadd R0004, R1115, R2731 is op0510=0x3F & R0004 & R1115; op1626=0x3BA & R2731 {
 	local res:5 = sext(R0004) + sext(R1115);
@@ -249,13 +256,18 @@ macro saturate(value) {
 	saturate(res);
 	R2731 = res:4;
 }
+@endif
 
 # MAC reg1, reg2, reg3, reg4
+@ifndef V850E1
 :mac R0004, R1115, R2731pair, R1620pair is op0510=0x3F & R0004 & R1115; op2126=0x1E & op1616=0 & R1620pair & R2731pair {
 	R1620pair = R2731pair + sext(R0004) * sext(R1115);
 }
+@endif
 # MACU reg1, reg2, reg3, reg4
+@ifndef V850E1
 :macu R0004, R1115, R2731pair, R1620pair is op0510=0x3F & R0004 & R1115; op2126=0x1F & op1616=0 & R1620pair & R2731pair {
 	R1620pair = R2731pair + zext(R0004) * zext(R1115);
 }
+@endif
 

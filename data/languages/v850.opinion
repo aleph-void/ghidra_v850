@@ -1,12 +1,51 @@
 <opinions>
-    <!-- EM_V800 (36, the RH850 ABI), EM_V850 (87) and the old EM_CYGNUS_V850 (0x9080).
-         For EM_V850 the architecture is in e_flags bits 28-31 (6: V850E3V5 = RH850). -->
+    <!-- EM_V800 (36, the RH850 ABI), EM_V850 (87) and the old EM_CYGNUS_V850 (0x9080 = 36992).
+         Ghidra's own V850 module claims the same machines. The same constraints are listed for
+         RH850ElfLoader (src/main/java/ghidra/app/util/opinion), an ELF loader that sorts before
+         the generic one and offers only these languages, so that imports pick RH850
+         deterministically; the generic ELF loader still offers them too. -->
     <constraint loader="Executable and Linking Format (ELF)" compilerSpecID="default">
-        <constraint primary="36" processor="RH850" endian="little" size="32" variant="default"/>
-        <constraint primary="87" processor="RH850" endian="little" size="32" variant="default"
+        <!-- EM_V800: RH850 ABI; e_flags bit 20 (EF_V800_850E3) set = V850E3V5, clear = V850E2V3 -->
+        <constraint primary="36" processor="RH850" endian="little" size="32" variant="default"
+            secondary="0b.... .... ...1 .... .... .... .... ...."/>
+        <constraint primary="36" processor="RH850" endian="little" size="32" variant="V850E2M"
+            secondary="0b.... .... ...0 .... .... .... .... ...."/>
+        <!-- EM_V850 and EM_CYGNUS_V850: architecture in e_flags bits 28-31 (bfd's mapping) -->
+        <constraint primary="87,36992" processor="RH850" endian="little" size="32" variant="default"
             secondary="0b0110 .... .... .... .... .... .... ...."/>
-        <constraint primary="87" processor="RH850" endian="little" size="32" variant="V850E2M"
-            secondary="0b0... .... .... .... .... .... .... ...."/>
-        <constraint primary="36992" processor="RH850" endian="little" size="32" variant="V850E2M"/>
+        <constraint primary="87,36992" processor="RH850" endian="little" size="32" variant="V850E2M"
+            secondary="0b0011 .... .... .... .... .... .... ...."/>
+        <constraint primary="87,36992" processor="RH850" endian="little" size="32" variant="V850E2M"
+            secondary="0b0100 .... .... .... .... .... .... ...."/>
+        <constraint primary="87,36992" processor="RH850" endian="little" size="32" variant="V850E1"
+            secondary="0b000. .... .... .... .... .... .... ...."/>
+        <constraint primary="87,36992" processor="RH850" endian="little" size="32" variant="V850E1"
+            secondary="0b0010 .... .... .... .... .... .... ...."/>
+        <constraint primary="87,36992" processor="RH850" endian="little" size="32" variant="V850E1"
+            secondary="0b01.1 .... .... .... .... .... .... ...."/>
+        <constraint primary="87,36992" processor="RH850" endian="little" size="32" variant="V850E1"
+            secondary="0b1... .... .... .... .... .... .... ...."/>
+    </constraint>
+    <constraint loader="Executable and Linking Format (ELF) for RH850/V850" compilerSpecID="default">
+        <!-- EM_V800: RH850 ABI; e_flags bit 20 (EF_V800_850E3) set = V850E3V5, clear = V850E2V3 -->
+        <constraint primary="36" processor="RH850" endian="little" size="32" variant="default"
+            secondary="0b.... .... ...1 .... .... .... .... ...."/>
+        <constraint primary="36" processor="RH850" endian="little" size="32" variant="V850E2M"
+            secondary="0b.... .... ...0 .... .... .... .... ...."/>
+        <!-- EM_V850 and EM_CYGNUS_V850: architecture in e_flags bits 28-31 (bfd's mapping) -->
+        <constraint primary="87,36992" processor="RH850" endian="little" size="32" variant="default"
+            secondary="0b0110 .... .... .... .... .... .... ...."/>
+        <constraint primary="87,36992" processor="RH850" endian="little" size="32" variant="V850E2M"
+            secondary="0b0011 .... .... .... .... .... .... ...."/>
+        <constraint primary="87,36992" processor="RH850" endian="little" size="32" variant="V850E2M"
+            secondary="0b0100 .... .... .... .... .... .... ...."/>
+        <constraint primary="87,36992" processor="RH850" endian="little" size="32" variant="V850E1"
+            secondary="0b000. .... .... .... .... .... .... ...."/>
+        <constraint primary="87,36992" processor="RH850" endian="little" size="32" variant="V850E1"
+            secondary="0b0010 .... .... .... .... .... .... ...."/>
+        <constraint primary="87,36992" processor="RH850" endian="little" size="32" variant="V850E1"
+            secondary="0b01.1 .... .... .... .... .... .... ...."/>
+        <constraint primary="87,36992" processor="RH850" endian="little" size="32" variant="V850E1"
+            secondary="0b1... .... .... .... .... .... .... ...."/>
     </constraint>
 </opinions>

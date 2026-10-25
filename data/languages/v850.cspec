@@ -77,4 +77,662 @@
       </killedbycall>
     </prototype>
   </default_proto>
+  <!-- generated call fixups (tools/gen_callfixups.py): begin -->
+  <callfixup name="__save_r2_r29">
+    <target name="__save_r2_r29"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 44;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+        a4:4 = sp + 16; *[ram]:4 a4 = r25;
+        a5:4 = sp + 20; *[ram]:4 a5 = r24;
+        a6:4 = sp + 24; *[ram]:4 a6 = r23;
+        a7:4 = sp + 28; *[ram]:4 a7 = r22;
+        a8:4 = sp + 32; *[ram]:4 a8 = r21;
+        a9:4 = sp + 36; *[ram]:4 a9 = r20;
+        a10:4 = sp + 40; *[ram]:4 a10 = r2;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r2_r29">
+    <target name="__return_r2_r29"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        a4:4 = sp + 16; r25 = *[ram]:4 a4;
+        a5:4 = sp + 20; r24 = *[ram]:4 a5;
+        a6:4 = sp + 24; r23 = *[ram]:4 a6;
+        a7:4 = sp + 28; r22 = *[ram]:4 a7;
+        a8:4 = sp + 32; r21 = *[ram]:4 a8;
+        a9:4 = sp + 36; r20 = *[ram]:4 a9;
+        a10:4 = sp + 40; r2 = *[ram]:4 a10;
+        sp = sp + 44;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r20_r29">
+    <target name="__save_r20_r29"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 40;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+        a4:4 = sp + 16; *[ram]:4 a4 = r25;
+        a5:4 = sp + 20; *[ram]:4 a5 = r24;
+        a6:4 = sp + 24; *[ram]:4 a6 = r23;
+        a7:4 = sp + 28; *[ram]:4 a7 = r22;
+        a8:4 = sp + 32; *[ram]:4 a8 = r21;
+        a9:4 = sp + 36; *[ram]:4 a9 = r20;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r20_r29">
+    <target name="__return_r20_r29"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        a4:4 = sp + 16; r25 = *[ram]:4 a4;
+        a5:4 = sp + 20; r24 = *[ram]:4 a5;
+        a6:4 = sp + 24; r23 = *[ram]:4 a6;
+        a7:4 = sp + 28; r22 = *[ram]:4 a7;
+        a8:4 = sp + 32; r21 = *[ram]:4 a8;
+        a9:4 = sp + 36; r20 = *[ram]:4 a9;
+        sp = sp + 40;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r21_r29">
+    <target name="__save_r21_r29"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 36;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+        a4:4 = sp + 16; *[ram]:4 a4 = r25;
+        a5:4 = sp + 20; *[ram]:4 a5 = r24;
+        a6:4 = sp + 24; *[ram]:4 a6 = r23;
+        a7:4 = sp + 28; *[ram]:4 a7 = r22;
+        a8:4 = sp + 32; *[ram]:4 a8 = r21;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r21_r29">
+    <target name="__return_r21_r29"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        a4:4 = sp + 16; r25 = *[ram]:4 a4;
+        a5:4 = sp + 20; r24 = *[ram]:4 a5;
+        a6:4 = sp + 24; r23 = *[ram]:4 a6;
+        a7:4 = sp + 28; r22 = *[ram]:4 a7;
+        a8:4 = sp + 32; r21 = *[ram]:4 a8;
+        sp = sp + 36;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r22_r29">
+    <target name="__save_r22_r29"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 32;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+        a4:4 = sp + 16; *[ram]:4 a4 = r25;
+        a5:4 = sp + 20; *[ram]:4 a5 = r24;
+        a6:4 = sp + 24; *[ram]:4 a6 = r23;
+        a7:4 = sp + 28; *[ram]:4 a7 = r22;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r22_r29">
+    <target name="__return_r22_r29"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        a4:4 = sp + 16; r25 = *[ram]:4 a4;
+        a5:4 = sp + 20; r24 = *[ram]:4 a5;
+        a6:4 = sp + 24; r23 = *[ram]:4 a6;
+        a7:4 = sp + 28; r22 = *[ram]:4 a7;
+        sp = sp + 32;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r23_r29">
+    <target name="__save_r23_r29"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 28;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+        a4:4 = sp + 16; *[ram]:4 a4 = r25;
+        a5:4 = sp + 20; *[ram]:4 a5 = r24;
+        a6:4 = sp + 24; *[ram]:4 a6 = r23;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r23_r29">
+    <target name="__return_r23_r29"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        a4:4 = sp + 16; r25 = *[ram]:4 a4;
+        a5:4 = sp + 20; r24 = *[ram]:4 a5;
+        a6:4 = sp + 24; r23 = *[ram]:4 a6;
+        sp = sp + 28;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r24_r29">
+    <target name="__save_r24_r29"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 24;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+        a4:4 = sp + 16; *[ram]:4 a4 = r25;
+        a5:4 = sp + 20; *[ram]:4 a5 = r24;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r24_r29">
+    <target name="__return_r24_r29"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        a4:4 = sp + 16; r25 = *[ram]:4 a4;
+        a5:4 = sp + 20; r24 = *[ram]:4 a5;
+        sp = sp + 24;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r25_r29">
+    <target name="__save_r25_r29"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 20;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+        a4:4 = sp + 16; *[ram]:4 a4 = r25;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r25_r29">
+    <target name="__return_r25_r29"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        a4:4 = sp + 16; r25 = *[ram]:4 a4;
+        sp = sp + 20;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r26_r29">
+    <target name="__save_r26_r29"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 16;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r26_r29">
+    <target name="__return_r26_r29"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        sp = sp + 16;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r27_r29">
+    <target name="__save_r27_r29"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 12;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r27_r29">
+    <target name="__return_r27_r29"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        sp = sp + 12;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r28_r29">
+    <target name="__save_r28_r29"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 8;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r28_r29">
+    <target name="__return_r28_r29"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        sp = sp + 8;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r29">
+    <target name="__save_r29"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 4;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r29">
+    <target name="__return_r29"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        sp = sp + 4;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r2_r31">
+    <target name="__save_r2_r31"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 48;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+        a4:4 = sp + 16; *[ram]:4 a4 = r25;
+        a5:4 = sp + 20; *[ram]:4 a5 = r24;
+        a6:4 = sp + 24; *[ram]:4 a6 = r23;
+        a7:4 = sp + 28; *[ram]:4 a7 = r22;
+        a8:4 = sp + 32; *[ram]:4 a8 = r21;
+        a9:4 = sp + 36; *[ram]:4 a9 = r20;
+        a10:4 = sp + 40; *[ram]:4 a10 = r2;
+        a11:4 = sp + 44; *[ram]:4 a11 = lp;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r2_r31">
+    <target name="__return_r2_r31"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        a4:4 = sp + 16; r25 = *[ram]:4 a4;
+        a5:4 = sp + 20; r24 = *[ram]:4 a5;
+        a6:4 = sp + 24; r23 = *[ram]:4 a6;
+        a7:4 = sp + 28; r22 = *[ram]:4 a7;
+        a8:4 = sp + 32; r21 = *[ram]:4 a8;
+        a9:4 = sp + 36; r20 = *[ram]:4 a9;
+        a10:4 = sp + 40; r2 = *[ram]:4 a10;
+        a11:4 = sp + 44; lp = *[ram]:4 a11;
+        sp = sp + 48;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r20_r31">
+    <target name="__save_r20_r31"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 44;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+        a4:4 = sp + 16; *[ram]:4 a4 = r25;
+        a5:4 = sp + 20; *[ram]:4 a5 = r24;
+        a6:4 = sp + 24; *[ram]:4 a6 = r23;
+        a7:4 = sp + 28; *[ram]:4 a7 = r22;
+        a8:4 = sp + 32; *[ram]:4 a8 = r21;
+        a9:4 = sp + 36; *[ram]:4 a9 = r20;
+        a10:4 = sp + 40; *[ram]:4 a10 = lp;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r20_r31">
+    <target name="__return_r20_r31"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        a4:4 = sp + 16; r25 = *[ram]:4 a4;
+        a5:4 = sp + 20; r24 = *[ram]:4 a5;
+        a6:4 = sp + 24; r23 = *[ram]:4 a6;
+        a7:4 = sp + 28; r22 = *[ram]:4 a7;
+        a8:4 = sp + 32; r21 = *[ram]:4 a8;
+        a9:4 = sp + 36; r20 = *[ram]:4 a9;
+        a10:4 = sp + 40; lp = *[ram]:4 a10;
+        sp = sp + 44;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r21_r31">
+    <target name="__save_r21_r31"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 40;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+        a4:4 = sp + 16; *[ram]:4 a4 = r25;
+        a5:4 = sp + 20; *[ram]:4 a5 = r24;
+        a6:4 = sp + 24; *[ram]:4 a6 = r23;
+        a7:4 = sp + 28; *[ram]:4 a7 = r22;
+        a8:4 = sp + 32; *[ram]:4 a8 = r21;
+        a9:4 = sp + 36; *[ram]:4 a9 = lp;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r21_r31">
+    <target name="__return_r21_r31"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        a4:4 = sp + 16; r25 = *[ram]:4 a4;
+        a5:4 = sp + 20; r24 = *[ram]:4 a5;
+        a6:4 = sp + 24; r23 = *[ram]:4 a6;
+        a7:4 = sp + 28; r22 = *[ram]:4 a7;
+        a8:4 = sp + 32; r21 = *[ram]:4 a8;
+        a9:4 = sp + 36; lp = *[ram]:4 a9;
+        sp = sp + 40;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r22_r31">
+    <target name="__save_r22_r31"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 36;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+        a4:4 = sp + 16; *[ram]:4 a4 = r25;
+        a5:4 = sp + 20; *[ram]:4 a5 = r24;
+        a6:4 = sp + 24; *[ram]:4 a6 = r23;
+        a7:4 = sp + 28; *[ram]:4 a7 = r22;
+        a8:4 = sp + 32; *[ram]:4 a8 = lp;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r22_r31">
+    <target name="__return_r22_r31"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        a4:4 = sp + 16; r25 = *[ram]:4 a4;
+        a5:4 = sp + 20; r24 = *[ram]:4 a5;
+        a6:4 = sp + 24; r23 = *[ram]:4 a6;
+        a7:4 = sp + 28; r22 = *[ram]:4 a7;
+        a8:4 = sp + 32; lp = *[ram]:4 a8;
+        sp = sp + 36;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r23_r31">
+    <target name="__save_r23_r31"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 32;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+        a4:4 = sp + 16; *[ram]:4 a4 = r25;
+        a5:4 = sp + 20; *[ram]:4 a5 = r24;
+        a6:4 = sp + 24; *[ram]:4 a6 = r23;
+        a7:4 = sp + 28; *[ram]:4 a7 = lp;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r23_r31">
+    <target name="__return_r23_r31"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        a4:4 = sp + 16; r25 = *[ram]:4 a4;
+        a5:4 = sp + 20; r24 = *[ram]:4 a5;
+        a6:4 = sp + 24; r23 = *[ram]:4 a6;
+        a7:4 = sp + 28; lp = *[ram]:4 a7;
+        sp = sp + 32;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r24_r31">
+    <target name="__save_r24_r31"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 28;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+        a4:4 = sp + 16; *[ram]:4 a4 = r25;
+        a5:4 = sp + 20; *[ram]:4 a5 = r24;
+        a6:4 = sp + 24; *[ram]:4 a6 = lp;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r24_r31">
+    <target name="__return_r24_r31"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        a4:4 = sp + 16; r25 = *[ram]:4 a4;
+        a5:4 = sp + 20; r24 = *[ram]:4 a5;
+        a6:4 = sp + 24; lp = *[ram]:4 a6;
+        sp = sp + 28;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r25_r31">
+    <target name="__save_r25_r31"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 24;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+        a4:4 = sp + 16; *[ram]:4 a4 = r25;
+        a5:4 = sp + 20; *[ram]:4 a5 = lp;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r25_r31">
+    <target name="__return_r25_r31"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        a4:4 = sp + 16; r25 = *[ram]:4 a4;
+        a5:4 = sp + 20; lp = *[ram]:4 a5;
+        sp = sp + 24;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r26_r31">
+    <target name="__save_r26_r31"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 20;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = r26;
+        a4:4 = sp + 16; *[ram]:4 a4 = lp;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r26_r31">
+    <target name="__return_r26_r31"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; r26 = *[ram]:4 a3;
+        a4:4 = sp + 16; lp = *[ram]:4 a4;
+        sp = sp + 20;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r27_r31">
+    <target name="__save_r27_r31"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 16;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = r27;
+        a3:4 = sp + 12; *[ram]:4 a3 = lp;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r27_r31">
+    <target name="__return_r27_r31"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; r27 = *[ram]:4 a2;
+        a3:4 = sp + 12; lp = *[ram]:4 a3;
+        sp = sp + 16;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r28_r31">
+    <target name="__save_r28_r31"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 12;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = r28;
+        a2:4 = sp + 8; *[ram]:4 a2 = lp;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r28_r31">
+    <target name="__return_r28_r31"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; r28 = *[ram]:4 a1;
+        a2:4 = sp + 8; lp = *[ram]:4 a2;
+        sp = sp + 12;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r29_r31">
+    <target name="__save_r29_r31"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 8;
+        a0:4 = sp + 0; *[ram]:4 a0 = r29;
+        a1:4 = sp + 4; *[ram]:4 a1 = lp;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r29_r31">
+    <target name="__return_r29_r31"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; r29 = *[ram]:4 a0;
+        a1:4 = sp + 4; lp = *[ram]:4 a1;
+        sp = sp + 8;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__save_r31">
+    <target name="__save_r31"/>
+    <pcode>
+      <body><![CDATA[
+        sp = sp - 4;
+        a0:4 = sp + 0; *[ram]:4 a0 = lp;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <callfixup name="__return_r31">
+    <target name="__return_r31"/>
+    <pcode>
+      <body><![CDATA[
+        a0:4 = sp + 0; lp = *[ram]:4 a0;
+        sp = sp + 4;
+      ]]></body>
+    </pcode>
+  </callfixup>
+  <!-- generated call fixups: end -->
 </compiler_spec>

@@ -4,6 +4,14 @@
 
 <processor_spec>
   <programcounter register="PC"/>
+  <!-- FPSR.RM (bits 18-19) selects the rounding of inexact FP conversions. Assume the reset
+       state, round to nearest, so that the decompiler folds the rounding-mode selection; code
+       that changes RM sets FPSR explicitly and is followed from there. -->
+  <context_data>
+    <tracked_set space="ram">
+      <set name="FPSR" val="0"/>
+    </tracked_set>
+  </context_data>
   <data_space space="ram"/>
   <volatile outputop="write" inputop="read">
     <range space="ram" first="0x0" last="0x20"/>

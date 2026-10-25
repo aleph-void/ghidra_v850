@@ -3,13 +3,14 @@
 #
 #   test/run-tests.sh [workdir]
 #
-# 1. compile both SLEIGH specs and link the module into $GHIDRA_INSTALL_DIR/Ghidra/Processors
+# 1. compile the SLEIGH specs and link the module into $GHIDRA_INSTALL_DIR/Ghidra/Processors
 # 2. decode corpora (gen_corpus.py): 48 encodings of every entry of binutils' V850 opcode table,
 #    every first halfword with three tails, and 100,000 random 8-byte slots; Ghidra
 #    (DumpSlots.java) vs GNU objdump's disassembler (slotdis, binutils 2.45 libopcodes) for
-#    v850e3v5 (RH850:LE:32:default) and v850e2v3 (RH850:LE:32:V850E2M); compare.py scores
+#    v850e3v5 (RH850:LE:32:default), v850e2v3 (RH850:LE:32:V850E2M) and v850e1
+#    (RH850:LE:32:V850E1); compare.py scores
 #    exact/semantic agreement and buckets every difference
-# 3. every-entry decode test (CoverageCheck.java): every constructor of both languages is reached
+# 3. every-entry decode test (CoverageCheck.java): every constructor of each language is reached
 # 4. p-code emulator tests (emu_tests.py, EmuCheck.java); needs v850-elf-as/ld (build-toolchain.sh)
 # 5. if REAL_SAMPLES is set (fetch-real-samples.sh output): real-binaries.sh
 #
@@ -46,7 +47,7 @@ export SLOTDIS
 echo "== decode corpora vs GNU objdump"
 python3 "$HERE/gen_corpus.py" "$BU_SRC/opcodes/v850-opc.c" .
 for c in table first fuzz; do
-	for v in "default v850e3v5" "V850E2M v850e2v3"; do
+	for v in "default v850e3v5" "V850E2M v850e2v3" "V850E1 v850e1"; do
 		set -- $v
 		"$SLOTDIS" $2 8 $c.bin >o_${c}_$2.txt
 		"$HERE/ghidra-slots.sh" RH850:LE:32:$1 $c.bin 8 g_${c}_$1.txt
@@ -57,7 +58,7 @@ done
 
 echo "== every-entry decode test"
 head -c 64 /dev/zero >zero.bin
-for l in default V850E2M; do
+for l in default V850E2M V850E1; do
 	"$HERE/ghidra-script.sh" raw RH850:LE:32:$l zero.bin CoverageCheck.java "$W/cov_$l.txt" 256
 	echo "-- RH850:LE:32:$l: $(tail -1 cov_$l.txt)"
 	grep '^unreached' cov_$l.txt | head -20 || true
@@ -67,6 +68,10 @@ echo "== p-code emulator tests"
 python3 "$HERE/emu_tests.py" .
 "$HERE/ghidra-script.sh" raw RH850:LE:32:default emu.bin EmuCheck.java "$W/emu.txt" "$W/emu_out.txt"
 grep -v '^PASS' emu_out.txt
+# the tests that assemble for V850E1, on the V850E1 language
+python3 "$HERE/emu_tests.py" . --arch v850e1
+"$HERE/ghidra-script.sh" raw RH850:LE:32:V850E1 emu_v850e1.bin EmuCheck.java "$W/emu_v850e1.txt" "$W/emu_v850e1_out.txt"
+grep -v '^PASS' emu_v850e1_out.txt
 
 if [[ -n ${REAL_SAMPLES:-} ]]; then
 	echo "== real binaries"
@@ -77,3 +82,4 @@ echo "== summary"
 grep -H "^compared" cmp_*.txt | sed 's/^cmp_//; s/\.txt:/: /'
 grep -H "^coverage" cov_*.txt | sed 's/\.txt:/: /'
 tail -1 emu_out.txt
+tail -1 emu_v850e1_out.txt
