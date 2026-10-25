@@ -20,10 +20,10 @@
 # SLD.B disp7[ep], reg2
 :sld.b op0006[ep], R1115 is op0710=0x06 & op0006 & R1115 & ep {
 	local addr:4 = ep + op0006;
-	R1115 = zext(*:1 addr);
+	R1115 = sext(*:1 addr);
 }
-# SST.B disp7[ep], reg2
-:sst.b op0006[ep], R1115 is op0710=0x07 & op0006 & R1115 & ep {
+# SST.B reg2, disp7[ep]
+:sst.b R1115, op0006[ep] is op0710=0x07 & op0006 & R1115 & ep {
 	local addr:4 = op0006 + ep;
 	*:1 addr = R1115 : 1;
 }
@@ -31,10 +31,10 @@
 :sld.h disp8[ep], R1115 is op0710=0x08 & op0006 & R1115 & ep
 [ disp8 = op0006 * 2; ] {
 	local addr:4 = ep + disp8;
-	R1115 = zext(*:2 addr);
+	R1115 = sext(*:2 addr);
 }
-# SST.H disp8[ep], reg2
-:sst.h disp8[ep], R1115 is op0710=0x09 & op0006 & R1115 & ep
+# SST.H reg2, disp8[ep]
+:sst.h R1115, disp8[ep] is op0710=0x09 & op0006 & R1115 & ep
 [ disp8 = op0006 * 2; ] {
 	local addr:4 = disp8 + ep;
 	*:2 addr = R1115 : 2;
@@ -45,28 +45,28 @@
 	local addr:4 = ep + disp8;
 	R1115 = *:4 addr;
 }
-# SST.W disp8[ep], reg2
-:sst.w disp8[ep], R1115 is op0710=0x0A & op0000 = 1 & op0106 & R1115 & ep
+# SST.W reg2, disp8[ep]
+:sst.w R1115, disp8[ep] is op0710=0x0A & op0000 = 1 & op0106 & R1115 & ep
 [ disp8 = op0106 * 4; ] {
 	local addr:4 = disp8 + ep;
 	*:4 addr = R1115;
 }
 
 # LD.B disp16[reg1], reg2
-:ld.b s1631[R0004], r1115 is op0510=0x38 & R0004 & r1115; s1631 {
+:ld.b s1631[R0004], R1115 is op0510=0x38 & R0004 & R1115; s1631 {
 	local addr:4 = s1631 + R0004;
-	r1115 = sext(*:1 addr);
+	R1115 = sext(*:1 addr);
 }
 # LD.H disp16[reg1], reg2
-:ld.h s1631[R0004], r1115 is op0510=0x39 & R0004 & r1115; s1631 & op1616=0 {
+:ld.h s1631[R0004], R1115 is op0510=0x39 & R0004 & R1115; s1631 & op1616=0 {
 	local addr:4 = s1631 + R0004;
-	r1115 = sext(*:2 addr);
+	R1115 = sext(*:2 addr);
 }
 # LD.W disp16[reg1], reg2
-:ld.w disp16[R0004], r1115 is op0510=0x39 & R0004 & r1115; s1731 & op1616=1 
+:ld.w disp16[R0004], R1115 is op0510=0x39 & R0004 & R1115; s1731 & op1616=1 
 [ disp16 = s1731 * 2; ]{
 	local addr:4 = disp16 + R0004;
-	r1115 = *:4 addr;
+	R1115 = *:4 addr;
 }
 # ST.B reg2, disp16[reg1]
 :st.b R1115, s1631[R0004] is op0510=0x3A & R0004 & R1115; s1631 {
