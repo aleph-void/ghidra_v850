@@ -48,41 +48,43 @@
 
 macro pop(reg) { reg = *:4 sp; sp = sp + 4; }
 
-DispList31: lp					is 				prep21=1 & lp			{	pop(lp); }
-DispList31:						is 				prep21=0				{ }
-
-DispList30: ep,DispList31		is DispList31 & prep00=1 & ep			{	pop(ep); }
-DispList30: DispList31			is DispList31 & prep00=0				{ }
-
-DispList29: r29,DispList30		is DispList30 & prep22=1 & r29			{	pop(r29); }
-DispList29: DispList30			is DispList30 & prep22=0				{ }
-
-DispList28: r28,DispList29		is DispList29 & prep23=1 & r28			{	pop(r28); }
-DispList28: DispList29			is DispList29 & prep23=0				{ }
-
-DispList27: r27,DispList28		is DispList28 & prep28=1 & r27			{	pop(r27); }
-DispList27: DispList28			is DispList28 & prep28=0				{ }
-
-DispList26: r26,DispList27		is DispList27 & prep29=1 & r26			{	pop(r26); }
-DispList26: DispList27			is DispList27 & prep29=0				{ }
-
-DispList25: r25,DispList26		is DispList26 & prep30=1 & r25			{	pop(r25); }
-DispList25: DispList26			is DispList26 & prep30=0				{ }
-
-DispList24: r24,DispList25		is DispList25 & prep31=1 & r24			{	pop(r24); }
-DispList24: DispList25			is DispList25 & prep31=0				{ }
-
-DispList23: r23,DispList24		is DispList24 & prep24=1 & r23			{	pop(r23); }
-DispList23: DispList24			is DispList24 & prep24=0				{ }
-
-DispList22: r22,DispList23		is DispList23 & prep25=1 & r22			{	pop(r22); }
-DispList22: DispList23			is DispList23 & prep25=0				{ }
-
-DispList21: r21,DispList22		is DispList22 & prep26=1 & r21			{	pop(r21); }
-DispList21: DispList22			is DispList22 & prep26=0				{ }
-
-DispList: { r20,DispList21 }	is DispList21 & prep27=1 & r20			{	pop(r20); }
-DispList: { DispList21 }		is DispList21 & prep27=0				{ }
+# register list, shown in ascending order; restored from the stack lp first (lowest address)
+DispL0: r20		is prep27=1 & r20	{ pop(r20); }
+DispL0: 		is prep27=0	{ }
+DispL1: r21		is prep26=1 & prep27=0 & r21	{ pop(r21); }
+DispL1: DispL0,r21	is prep26=1 & DispL0 & r21	{ pop(r21); build DispL0; }
+DispL1: DispL0		is prep26=0 & DispL0	{ build DispL0; }
+DispL2: r22		is prep25=1 & prep27=0 & prep26=0 & r22	{ pop(r22); }
+DispL2: DispL1,r22	is prep25=1 & DispL1 & r22	{ pop(r22); build DispL1; }
+DispL2: DispL1		is prep25=0 & DispL1	{ build DispL1; }
+DispL3: r23		is prep24=1 & prep27=0 & prep26=0 & prep25=0 & r23	{ pop(r23); }
+DispL3: DispL2,r23	is prep24=1 & DispL2 & r23	{ pop(r23); build DispL2; }
+DispL3: DispL2		is prep24=0 & DispL2	{ build DispL2; }
+DispL4: r24		is prep31=1 & prep27=0 & prep26=0 & prep25=0 & prep24=0 & r24	{ pop(r24); }
+DispL4: DispL3,r24	is prep31=1 & DispL3 & r24	{ pop(r24); build DispL3; }
+DispL4: DispL3		is prep31=0 & DispL3	{ build DispL3; }
+DispL5: r25		is prep30=1 & prep27=0 & prep26=0 & prep25=0 & prep24=0 & prep31=0 & r25	{ pop(r25); }
+DispL5: DispL4,r25	is prep30=1 & DispL4 & r25	{ pop(r25); build DispL4; }
+DispL5: DispL4		is prep30=0 & DispL4	{ build DispL4; }
+DispL6: r26		is prep29=1 & prep27=0 & prep26=0 & prep25=0 & prep24=0 & prep31=0 & prep30=0 & r26	{ pop(r26); }
+DispL6: DispL5,r26	is prep29=1 & DispL5 & r26	{ pop(r26); build DispL5; }
+DispL6: DispL5		is prep29=0 & DispL5	{ build DispL5; }
+DispL7: r27		is prep28=1 & prep27=0 & prep26=0 & prep25=0 & prep24=0 & prep31=0 & prep30=0 & prep29=0 & r27	{ pop(r27); }
+DispL7: DispL6,r27	is prep28=1 & DispL6 & r27	{ pop(r27); build DispL6; }
+DispL7: DispL6		is prep28=0 & DispL6	{ build DispL6; }
+DispL8: r28		is prep23=1 & prep27=0 & prep26=0 & prep25=0 & prep24=0 & prep31=0 & prep30=0 & prep29=0 & prep28=0 & r28	{ pop(r28); }
+DispL8: DispL7,r28	is prep23=1 & DispL7 & r28	{ pop(r28); build DispL7; }
+DispL8: DispL7		is prep23=0 & DispL7	{ build DispL7; }
+DispL9: r29		is prep22=1 & prep27=0 & prep26=0 & prep25=0 & prep24=0 & prep31=0 & prep30=0 & prep29=0 & prep28=0 & prep23=0 & r29	{ pop(r29); }
+DispL9: DispL8,r29	is prep22=1 & DispL8 & r29	{ pop(r29); build DispL8; }
+DispL9: DispL8		is prep22=0 & DispL8	{ build DispL8; }
+DispL10: ep		is prep00=1 & prep27=0 & prep26=0 & prep25=0 & prep24=0 & prep31=0 & prep30=0 & prep29=0 & prep28=0 & prep23=0 & prep22=0 & ep	{ pop(ep); }
+DispL10: DispL9,ep	is prep00=1 & DispL9 & ep	{ pop(ep); build DispL9; }
+DispL10: DispL9		is prep00=0 & DispL9	{ build DispL9; }
+DispL11: lp		is prep21=1 & prep27=0 & prep26=0 & prep25=0 & prep24=0 & prep31=0 & prep30=0 & prep29=0 & prep28=0 & prep23=0 & prep22=0 & prep00=0 & lp	{ pop(lp); }
+DispL11: DispL10,lp	is prep21=1 & DispL10 & lp	{ pop(lp); build DispL10; }
+DispL11: DispL10		is prep21=0 & DispL10	{ build DispL10; }
+DispList: { DispL11 }	is DispL11	{ build DispL11; }
 
 
 
@@ -92,8 +94,8 @@ DispList: { DispList21 }		is DispList21 & prep27=0				{ }
 	build DispList;
 }
 
-# DISPOSE imm5, list12, [reg1]
-:dispose prep0105, DispList, [prep1620r] is prep0615=0x19 & prep1620r & prep0105 &  DispList {
+# DISPOSE imm5, list12, [reg1] (GNU syntax: no brackets)
+:dispose prep0105, DispList, prep1620r is prep0615=0x19 & prep1620r & prep0105 &  DispList {
 	sp = sp + (prep0105 << 2);
 	build DispList;
 	PC = prep1620r;
@@ -169,10 +171,11 @@ PrepList:	{ PrepList30 }		is prep21=0 & PrepList30		 			{ }
 	ep = s3247;
 }
 # PREPARE list12, imm5, imm16 (high)
-:prepare PrepList, prep0105, s3247 is prep0615=0x1E & prep0105 & prep1620=0x13 & PrepList; s3247 {
+:prepare PrepList, prep0105, hi is prep0615=0x1E & prep0105 & prep1620=0x13 & PrepList; op3247
+[ hi = op3247 << 16; ] {
 	build PrepList;
 	sp = sp - (prep0105 << 2);
-	ep = s3247 << 16;
+	ep = hi;
 }
 # PREPARE list12, imm5, imm32
 :prepare PrepList, prep0105, imm32 is prep0615=0x1E & prep0105 & prep1620=0x1B & PrepList; op3247; op4863
