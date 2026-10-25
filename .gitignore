@@ -3,3 +3,10 @@
 
 data/languages/*.sla
 
+
+# Ghidra-Rare build/test outputs
+build/
+dist/
+.gradle/
+lib/
+__pycache__/
