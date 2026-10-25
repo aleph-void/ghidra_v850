@@ -15,6 +15,7 @@
     <description>Renesas RH850 / V850E3 (G3K, G3M, G3KH, G3MH, G4MH)</description>
     <compiler name="default" spec="v850.cspec" id="default"/>
     <external_name tool="gnu" name="v850e3v5"/>
+    <external_name tool="DWARF.register.mapping.file" name="v850.dwarf"/>
   </language>
   <language processor="RH850"
             endian="little"
@@ -28,5 +29,6 @@
     <description>Renesas V850E2M</description>
     <compiler name="default" spec="v850.cspec" id="default"/>
     <external_name tool="gnu" name="v850e2v3"/>
+    <external_name tool="DWARF.register.mapping.file" name="v850.dwarf"/>
   </language>
 </language_definitions>
