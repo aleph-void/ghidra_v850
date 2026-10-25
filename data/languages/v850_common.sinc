@@ -244,8 +244,6 @@ attach variables [ R0004pair R1115pair R1620pair R2731pair ]
 attach variables [ R2731pairEx ]  # the same as R2731pair, but LSB is ignored
 	[ r0r1 r2sp gptp r6r7 r8r9 r10r11 r12r13 r14r15 r16r17 r18r19 r20r21 r22r23 r24r25 r26r27 r28r29 eplp ];
 
-attach names [fcond2730]
-  ["f" "un" "eq" "ueq" "olt" "ult" "ole" "ule" "sd" "ngle" "seq" "ngl" "lt" "nge" "le" "ngt"];
 
 
 @if defined(V850E2M)
