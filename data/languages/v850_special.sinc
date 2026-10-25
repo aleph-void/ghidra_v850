@@ -59,17 +59,28 @@
 	call [addr];
 }
 
-# RIE
-:rie is op0410=0x7F; op1631=0 unimpl # reserved instruction for future expansion
+# RIE imm5, imm4
+:rie op1115, op0003 is op0410=0x7F & op1115 & op0003; op1631=0 unimpl # reserved instruction for future expansion
 
-# LDSR reg2, regID
-:ldsr R0004, SR1115 is op0510=0x3F & SR1115 & R0004; op1631=0x20 {
+@if defined(V850E3)
+# LDSR reg2, regID, selID (selID 0)
+:ldsr R0004, SR1115, 0 is op0510=0x3F & SR1115 & R0004; op1631=0x20 {
+	SR1115 = R0004;
+}
+# STSR regID, reg2, selID (selID 0)
+:stsr SR0004, R1115, 0 is op0510=0x3F & R1115 & SR0004; op1631=0x40 {
+	R1115 = SR0004;
+}
+@else
+# LDSR reg2, regID (V850E2M has no selID; bits 27-31 are ignored)
+:ldsr R0004, SR1115 is op0510=0x3F & SR1115 & R0004; op1626=0x20 {
 	SR1115 = R0004;
 }
 # STSR regID, reg2
-:stsr SR0004, R1115 is op0510=0x3F & R1115 & SR0004; op1631=0x40 {
+:stsr SR0004, R1115 is op0510=0x3F & R1115 & SR0004; op1626=0x40 {
 	R1115 = SR0004;
 }
+@endif
 
 # CAXI [reg1], reg2, reg3
 :caxi [R0004], R1115, R2731 is op0510=0x3F & R0004 & R1115; op1626=0xEE & R2731 {

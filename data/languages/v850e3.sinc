@@ -10,88 +10,88 @@ define register offset=0x180 size=4 [
     # the same as common special regs in v850_common.sinc
 
     # selID = 1
-    SPID    SPIDLIST RBASE   EBASE   INTBP   MCTL    PID     FPIPR
-    SVLOCK  _        TCSEL   SCCFG   SCBP    HVCCFG  HVCBP   VSEL
-    HVCFG   GMCFG    VMPRT2  _       HVSB    _       _       VMSCCTL
-    VMSCTBL0 VMSCTBL1 VMSCTBL2 VMSCTBL3 _    _       _       _
+    SPID SPIDLIST RBASE EBASE INTBP MCTL PID FPIPR
+    SVLOCK SR9_1 TCSEL SCCFG SCBP HVCCFG HVCBP VSEL
+    HVCFG GMCFG VMPRT2 SR19_1 HVSB SR21_1 SR22_1 VMSCCTL
+    VMSCTBL0 VMSCTBL1 VMSCTBL2 VMSCTBL3 SR28_1 SR29_1 SR30_1 SR31_1
 
     # selID = 2
-    PEID    BMID    _       _       _       HTCTL   MEA     ASID
-    MEI     _       ISPR    IMSR    ICSR    INTCFG  PLMR    RBCR0
-    RBCR1   RBNR    RBIP    _       _       _       _       HTSCCTL
+    PEID BMID SR2_2 SR3_2 SR4_2 HTCTL MEA ASID
+    MEI SR9_2 ISPR IMSR ICSR INTCFG PLMR RBCR0
+    RBCR1 RBNR RBIP SR19_2 SR20_2 SR21_2 SR22_2 HTSCCTL
     HTSCTBL0 HTSCTBL1 HTSCTBL2 HTSCTBL3 HTSCTBL4 HTSCTBL5 HTSCTBL6 HTSCTBL7
 
     # selID = 3
-    _ _ _ _ _ _ _ _
-    _ _ _ _ _ _ _ _
-    _ _ _ _ _ _ _ _
-    _ _ _ _ _ _ _ _
+    SR0_3 SR1_3 SR2_3 SR3_3 SR4_3 SR5_3 SR6_3 SR7_3
+    SR8_3 SR9_3 SR10_3 SR11_3 SR12_3 SR13_3 SR14_3 SR15_3
+    SR16_3 SR17_3 SR18_3 SR19_3 SR20_3 SR21_3 SR22_3 SR23_3
+    SR24_3 SR25_3 SR26_3 SR27_3 SR28_3 SR29_3 SR30_3 SR31_3
 
     # selID = 4 Cache operation registers
-    TBLIDX  _       _       _       TELO0   TELO1   TEHI0   TEHI1
-    _       _       TBLCFG  _       BWERRL  BWERRH  BRERRL  BRERRH
-    ICTAGL  ICTAGH  ICDATL  ICDATH  DCTAGL  DCTAGH  DCDATL  DCDATH
-    ICCTRL  DCCTRL  ICCFG   DCCFG   ICERR   DCERR   _       _
+    TBLIDX SR1_4 SR2_4 SR3_4 TELO0 TELO1 TEHI0 TEHI1
+    SR8_4 SR9_4 TBLCFG SR11_4 BWERRL BWERRH BRERRL BRERRH
+    ICTAGL ICTAGH ICDATL ICDATH DCTAGL DCTAGH DCDATL DCDATH
+    ICCTRL DCCTRL ICCFG DCCFG ICERR DCERR SR30_4 SR31_4
 
     # selID = 5, MPU registers
-    MPM     MPRC    MPCFG   _       MPBRGN  MPTRGN  _       _
-    MCA     MCS     MCC     MCR     MCI     _       _       _
-    MPIDX   MPBK    _       _       MPLA    MPUA    MPAT    _
-    MPID0   MPID1   MPID2   MPID3   MPID4   MPID5   MPID6   MPID7
+    MPM MPRC MPCFG SR3_5 MPBRGN MPTRGN SR6_5 SR7_5
+    MCA MCS MCC MCR MCI SR13_5 SR14_5 SR15_5
+    MPIDX MPBK SR18_5 SR19_5 MPLA MPUA MPAT SR23_5
+    MPID0 MPID1 MPID2 MPID3 MPID4 MPID5 MPID6 MPID7
 
     # selID = 6, MPU registers
-    MPLA0   MPUA0   MPAT0   _       MPLA1   MPUA1   MPAT1   _
-    MPLA2   MPUA2   MPAT2   _       MPLA3   MPUA3   MPAT3   _
-    MPLA4   MPUA4   MPAT4   _       MPLA5   MPUA5   MPAT5   _
-    MPLA6   MPUA6   MPAT6   _       MPLA7   MPUA7   MPAT7   _
+    MPLA0 MPUA0 MPAT0 SR3_6 MPLA1 MPUA1 MPAT1 SR7_6
+    MPLA2 MPUA2 MPAT2 SR11_6 MPLA3 MPUA3 MPAT3 SR15_6
+    MPLA4 MPUA4 MPAT4 SR19_6 MPLA5 MPUA5 MPAT5 SR23_6
+    MPLA6 MPUA6 MPAT6 SR27_6 MPLA7 MPUA7 MPAT7 SR31_6
 
     # selID = 7, MPU registers
-    MPLA8   MPUA8   MPAT8   _       MPLA9   MPUA9   MPAT9   _
-    MPLA10  MPUA10  MPAT10  _       MPLA11  MPUA11  MPAT11  _
-    MPLA12  MPUA12  MPAT12  _       MPLA13  MPUA13  MPAT13  _
-    MPLA14  MPUA14  MPAT14  _       MPLA15  MPUA15  MPAT15  _
+    MPLA8 MPUA8 MPAT8 SR3_7 MPLA9 MPUA9 MPAT9 SR7_7
+    MPLA10 MPUA10 MPAT10 SR11_7 MPLA11 MPUA11 MPAT11 SR15_7
+    MPLA12 MPUA12 MPAT12 SR19_7 MPLA13 MPUA13 MPAT13 SR23_7
+    MPLA14 MPUA14 MPAT14 SR27_7 MPLA15 MPUA15 MPAT15 SR31_7
 
     # selID = 9, Guest Context registers
-    GMEIPC   GMEIPSW    GMFEPC GMFEPSW _       GMPSW    GMMEA   _
-    GMMEI    _          _      _       _       GMEIIC   GMFEIC  _
-    GMSPID   GMSPIDLIST _      GMEBASE GMINTBP GMINTCFG GMPLMR  _
-    GMSVLOCK GMMPM      _      _       GMEIWR  GMFEWR   GMEID   _
+    GMEIPC GMEIPSW GMFEPC GMFEPSW SR4_9 GMPSW GMMEA SR7_9
+    GMMEI SR9_9 SR10_9 SR11_9 SR12_9 GMEIIC GMFEIC SR15_9
+    GMSPID GMSPIDLIST SR18_9 GMEBASE GMINTBP GMINTCFG GMPLMR SR23_9
+    GMSVLOCK GMMPM SR26_9 SR27_9 GMEIWR GMFEWR GMEID SR31_9
 
     # selID = 10, Extended Floating-point Funtion (FXU) system registers
-    _ _ _ _ _ _ FXSR _
-    FXST FXINFO FXCFG _ FXXC FXXP _ _
-    _ _ _ _ _ _ _ _
-    _ _ _ _ _ _ _ _
+    SR0_10 SR1_10 SR2_10 SR3_10 SR4_10 SR5_10 FXSR SR7_10
+    FXST FXINFO FXCFG SR11_10 FXXC FXXP SR14_10 SR15_10
+    SR16_10 SR17_10 SR18_10 SR19_10 SR20_10 SR21_10 SR22_10 SR23_10
+    SR24_10 SR25_10 SR26_10 SR27_10 SR28_10 SR29_10 SR30_10 SR31_10
 
     # selID = 11, Count function registers
-    TSCOUNTL TSCOUNTH TSCTRL _ _ _ _ _
-    PMUMCTRL PMGMCTRL _ _ _ _ _ _
+    TSCOUNTL TSCOUNTH TSCTRL SR3_11 SR4_11 SR5_11 SR6_11 SR7_11
+    PMUMCTRL PMGMCTRL SR10_11 SR11_11 SR12_11 SR13_11 SR14_11 SR15_11
     PMCOUNT0_11 PMCTRL0_11 PMCOUNT1_11 PMCTRL1_11 PMCOUNT2_11 PMCTRL2_11 PMCOUNT3_11 PMCTRL3_11
-    _ _ _ _ _ _ _ _
+    SR24_11 SR25_11 SR26_11 SR27_11 SR28_11 SR29_11 SR30_11 SR31_11
 
     # selID = 12, Hardware function registers
-    LSTEST0 LSTEST1 LSCFG _ IFCR _ _ _
-    BRPCTRL0 _ _ _ _ _ _ _
-    _ _ _ _ _ _ _ _
-    _ _ _ _ _ _ _ _
+    LSTEST0 LSTEST1 LSCFG SR3_12 IFCR SR5_12 SR6_12 SR7_12
+    BRPCTRL0 SR9_12 SR10_12 SR11_12 SR12_12 SR13_12 SR14_12 SR15_12
+    SR16_12 SR17_12 SR18_12 SR19_12 SR20_12 SR21_12 SR22_12 SR23_12
+    SR24_12 SR25_12 SR26_12 SR27_12 SR28_12 SR29_12 SR30_12 SR31_12
 
     # selID = 13, Hardware function registers
-    _ _ _ _ _ _ _ _
-    _ _ _ _ L1CFG _ _ _
-    _ _ _ _ _ _ _ _
-    RDBCR _ _ _ _ _ _ _
+    SR0_13 SR1_13 SR2_13 SR3_13 SR4_13 SR5_13 SR6_13 SR7_13
+    SR8_13 SR9_13 SR10_13 SR11_13 L1CFG SR13_13 SR14_13 SR15_13
+    SR16_13 SR17_13 SR18_13 SR19_13 SR20_13 SR21_13 SR22_13 SR23_13
+    RDBCR SR25_13 SR26_13 SR27_13 SR28_13 SR29_13 SR30_13 SR31_13
 
     # selID = 14 Performance counters
     PMCTRL0_14 PMCTRL1_14 PMCTRL2_14 PMCTRL3_14 PMCTRL4_14 PMCTRL5_14 PMCTRL6_14 PMCTRL7_14
-    _ _ _ _ _ _ _ _
+    SR8_14 SR9_14 SR10_14 SR11_14 SR12_14 SR13_14 SR14_14 SR15_14
     PMCOUNT0_14 PMCOUNT1_14 PMCOUNT2_14 PMCOUNT3_14 PMCOUNT4_14 PMCOUNT5_14 PMCOUNT6_14 PMCOUNT7_14
-    _ _ _ _ _ _ _ _
+    SR24_14 SR25_14 SR26_14 SR27_14 SR28_14 SR29_14 SR30_14 SR31_14
 	
     # selID = 15 Performance counters
     PMSUBCND0 PMSUBCND1 PMSUBCND2 PMSUBCND3 PMSUBCND4 PMSUBCND5 PMSUBCND6 PMSUBCND7
-    _ _ _ _ _ _ _ _
-    _ _ _ _ _ _ _ _
-    _ _ _ _ _ _ _ _
+    SR8_15 SR9_15 SR10_15 SR11_15 SR12_15 SR13_15 SR14_15 SR15_15
+    SR16_15 SR17_15 SR18_15 SR19_15 SR20_15 SR21_15 SR22_15 SR23_15
+    SR24_15 SR25_15 SR26_15 SR27_15 SR28_15 SR29_15 SR30_15 SR31_15
 	
 
     vr0  vr1  vr2  vr3  vr4  vr5  vr6  vr7
@@ -103,94 +103,94 @@ define register offset=0x180 size=4 [
 
 attach variables [ SR0004_1 SR1115_1 ] [
     # selID = 1
-    SPID    SPIDLIST RBASE   EBASE   INTBP   MCTL    PID     FPIPR
-    SVLOCK  _        TCSEL   SCCFG   SCBP    HVCCFG  HVCBP   VSEL
-    HVCFG   GMCFG    VMPRT2  _       HVSB    _       _       VMSCCTL
-    VMSCTBL0 VMSCTBL1 VMSCTBL2 VMSCTBL3 _    _       _       _
+    SPID SPIDLIST RBASE EBASE INTBP MCTL PID FPIPR
+    SVLOCK SR9_1 TCSEL SCCFG SCBP HVCCFG HVCBP VSEL
+    HVCFG GMCFG VMPRT2 SR19_1 HVSB SR21_1 SR22_1 VMSCCTL
+    VMSCTBL0 VMSCTBL1 VMSCTBL2 VMSCTBL3 SR28_1 SR29_1 SR30_1 SR31_1
 ];
 attach variables [ SR0004_2 SR1115_2 ] [
     # selID = 2
-    PEID    BMID    _       _       _       HTCTL   MEA     ASID
-    MEI     _       ISPR    IMSR    ICSR    INTCFG  PLMR    RBCR0
-    RBCR1   RBNR    RBIP    _       _       _       _       HTSCCTL
+    PEID BMID SR2_2 SR3_2 SR4_2 HTCTL MEA ASID
+    MEI SR9_2 ISPR IMSR ICSR INTCFG PLMR RBCR0
+    RBCR1 RBNR RBIP SR19_2 SR20_2 SR21_2 SR22_2 HTSCCTL
     HTSCTBL0 HTSCTBL1 HTSCTBL2 HTSCTBL3 HTSCTBL4 HTSCTBL5 HTSCTBL6 HTSCTBL7
 ];
 attach variables [ SR0004_4 SR1115_4 ] [
     # selID = 4 Cache operation registers
-    TBLIDX  _       _       _       TELO0   TELO1   TEHI0   TEHI1
-    _       _       TBLCFG  _       BWERRL  BWERRH  BRERRL  BRERRH
-    ICTAGL  ICTAGH  ICDATL  ICDATH  DCTAGL  DCTAGH  DCDATL  DCDATH
-    ICCTRL  DCCTRL  ICCFG   DCCFG   ICERR   DCERR   _       _
+    TBLIDX SR1_4 SR2_4 SR3_4 TELO0 TELO1 TEHI0 TEHI1
+    SR8_4 SR9_4 TBLCFG SR11_4 BWERRL BWERRH BRERRL BRERRH
+    ICTAGL ICTAGH ICDATL ICDATH DCTAGL DCTAGH DCDATL DCDATH
+    ICCTRL DCCTRL ICCFG DCCFG ICERR DCERR SR30_4 SR31_4
 ];
 attach variables [ SR0004_5 SR1115_5 ] [
     # selID = 5, MPU registers
-    MPM     MPRC    MPCFG   _       MPBRGN  MPTRGN  _       _
-    MCA     MCS     MCC     MCR     MCI     _       _       _
-    MPIDX   MPBK    _       _       MPLA    MPUA    MPAT    _
-    MPID0   MPID1   MPID2   MPID3   MPID4   MPID5   MPID6   MPID7
+    MPM MPRC MPCFG SR3_5 MPBRGN MPTRGN SR6_5 SR7_5
+    MCA MCS MCC MCR MCI SR13_5 SR14_5 SR15_5
+    MPIDX MPBK SR18_5 SR19_5 MPLA MPUA MPAT SR23_5
+    MPID0 MPID1 MPID2 MPID3 MPID4 MPID5 MPID6 MPID7
 ];
 attach variables [ SR0004_6 SR1115_6 ] [
     # selID = 6, MPU registers
-    MPLA0   MPUA0   MPAT0   _       MPLA1   MPUA1   MPAT1   _
-    MPLA2   MPUA2   MPAT2   _       MPLA3   MPUA3   MPAT3   _
-    MPLA4   MPUA4   MPAT4   _       MPLA5   MPUA5   MPAT5   _
-    MPLA6   MPUA6   MPAT6   _       MPLA7   MPUA7   MPAT7   _
+    MPLA0 MPUA0 MPAT0 SR3_6 MPLA1 MPUA1 MPAT1 SR7_6
+    MPLA2 MPUA2 MPAT2 SR11_6 MPLA3 MPUA3 MPAT3 SR15_6
+    MPLA4 MPUA4 MPAT4 SR19_6 MPLA5 MPUA5 MPAT5 SR23_6
+    MPLA6 MPUA6 MPAT6 SR27_6 MPLA7 MPUA7 MPAT7 SR31_6
 ];
 attach variables [ SR0004_7 SR1115_7 ] [
     # selID = 7, MPU registers
-    MPLA8   MPUA8   MPAT8   _       MPLA9   MPUA9   MPAT9   _
-    MPLA10  MPUA10  MPAT10  _       MPLA11  MPUA11  MPAT11  _
-    MPLA12  MPUA12  MPAT12  _       MPLA13  MPUA13  MPAT13  _
-    MPLA14  MPUA14  MPAT14  _       MPLA15  MPUA15  MPAT15  _
+    MPLA8 MPUA8 MPAT8 SR3_7 MPLA9 MPUA9 MPAT9 SR7_7
+    MPLA10 MPUA10 MPAT10 SR11_7 MPLA11 MPUA11 MPAT11 SR15_7
+    MPLA12 MPUA12 MPAT12 SR19_7 MPLA13 MPUA13 MPAT13 SR23_7
+    MPLA14 MPUA14 MPAT14 SR27_7 MPLA15 MPUA15 MPAT15 SR31_7
 ];
 attach variables [ SR0004_9 SR1115_9 ] [
     # selID = 9, Guest Context registers
-    GMEIPC   GMEIPSW    GMFEPC GMFEPSW _       GMPSW    GMMEA   _
-    GMMEI    _          _      _       _       GMEIIC   GMFEIC  _
-    GMSPID   GMSPIDLIST _      GMEBASE GMINTBP GMINTCFG GMPLMR  _
-    GMSVLOCK GMMPM      _      _       GMEIWR  GMFEWR   GMEID   _
+    GMEIPC GMEIPSW GMFEPC GMFEPSW SR4_9 GMPSW GMMEA SR7_9
+    GMMEI SR9_9 SR10_9 SR11_9 SR12_9 GMEIIC GMFEIC SR15_9
+    GMSPID GMSPIDLIST SR18_9 GMEBASE GMINTBP GMINTCFG GMPLMR SR23_9
+    GMSVLOCK GMMPM SR26_9 SR27_9 GMEIWR GMFEWR GMEID SR31_9
 ];
 attach variables [ SR0004_a SR1115_a ] [
     # selID = 10, Extended Floating-point Funtion (FXU) system registers
-    _ _ _ _ _ _ FXSR _
-    FXST FXINFO FXCFG _ FXXC FXXP _ _
-    _ _ _ _ _ _ _ _
-    _ _ _ _ _ _ _ _
+    SR0_10 SR1_10 SR2_10 SR3_10 SR4_10 SR5_10 FXSR SR7_10
+    FXST FXINFO FXCFG SR11_10 FXXC FXXP SR14_10 SR15_10
+    SR16_10 SR17_10 SR18_10 SR19_10 SR20_10 SR21_10 SR22_10 SR23_10
+    SR24_10 SR25_10 SR26_10 SR27_10 SR28_10 SR29_10 SR30_10 SR31_10
 ];
 attach variables [ SR0004_b SR1115_b ] [
     # selID = 11, Count function registers
-    TSCOUNTL TSCOUNTH TSCTRL _ _ _ _ _
-    PMUMCTRL PMGMCTRL _ _ _ _ _ _
+    TSCOUNTL TSCOUNTH TSCTRL SR3_11 SR4_11 SR5_11 SR6_11 SR7_11
+    PMUMCTRL PMGMCTRL SR10_11 SR11_11 SR12_11 SR13_11 SR14_11 SR15_11
     PMCOUNT0_11 PMCTRL0_11 PMCOUNT1_11 PMCTRL1_11 PMCOUNT2_11 PMCTRL2_11 PMCOUNT3_11 PMCTRL3_11
-    _ _ _ _ _ _ _ _
+    SR24_11 SR25_11 SR26_11 SR27_11 SR28_11 SR29_11 SR30_11 SR31_11
 ];
 attach variables [ SR0004_c SR1115_c ] [
     # selID = 12, Hardware function registers
-    LSTEST0 LSTEST1 LSCFG _ IFCR _ _ _
-    BRPCTRL0 _ _ _ _ _ _ _
-    _ _ _ _ _ _ _ _
-    _ _ _ _ _ _ _ _
+    LSTEST0 LSTEST1 LSCFG SR3_12 IFCR SR5_12 SR6_12 SR7_12
+    BRPCTRL0 SR9_12 SR10_12 SR11_12 SR12_12 SR13_12 SR14_12 SR15_12
+    SR16_12 SR17_12 SR18_12 SR19_12 SR20_12 SR21_12 SR22_12 SR23_12
+    SR24_12 SR25_12 SR26_12 SR27_12 SR28_12 SR29_12 SR30_12 SR31_12
 ];
 attach variables [ SR0004_d SR1115_d ] [
     # selID = 13, Hardware function registers
-    _ _ _ _ _ _ _ _
-    _ _ _ _ L1CFG _ _ _
-    _ _ _ _ _ _ _ _
-    RDBCR _ _ _ _ _ _ _
+    SR0_13 SR1_13 SR2_13 SR3_13 SR4_13 SR5_13 SR6_13 SR7_13
+    SR8_13 SR9_13 SR10_13 SR11_13 L1CFG SR13_13 SR14_13 SR15_13
+    SR16_13 SR17_13 SR18_13 SR19_13 SR20_13 SR21_13 SR22_13 SR23_13
+    RDBCR SR25_13 SR26_13 SR27_13 SR28_13 SR29_13 SR30_13 SR31_13
 ];
 attach variables [ SR0004_e SR1115_e ] [
     # selID = 14 Performance counters
     PMCTRL0_14 PMCTRL1_14 PMCTRL2_14 PMCTRL3_14 PMCTRL4_14 PMCTRL5_14 PMCTRL6_14 PMCTRL7_14
-    _ _ _ _ _ _ _ _
+    SR8_14 SR9_14 SR10_14 SR11_14 SR12_14 SR13_14 SR14_14 SR15_14
     PMCOUNT0_14 PMCOUNT1_14 PMCOUNT2_14 PMCOUNT3_14 PMCOUNT4_14 PMCOUNT5_14 PMCOUNT6_14 PMCOUNT7_14
-    _ _ _ _ _ _ _ _
+    SR24_14 SR25_14 SR26_14 SR27_14 SR28_14 SR29_14 SR30_14 SR31_14
 ];
 attach variables [ SR0004_f SR1115_f ] [
     # selID = 15 Performance counters
     PMSUBCND0 PMSUBCND1 PMSUBCND2 PMSUBCND3 PMSUBCND4 PMSUBCND5 PMSUBCND6 PMSUBCND7
-    _ _ _ _ _ _ _ _
-    _ _ _ _ _ _ _ _
-    _ _ _ _ _ _ _ _
+    SR8_15 SR9_15 SR10_15 SR11_15 SR12_15 SR13_15 SR14_15 SR15_15
+    SR16_15 SR17_15 SR18_15 SR19_15 SR20_15 SR21_15 SR22_15 SR23_15
+    SR24_15 SR25_15 SR26_15 SR27_15 SR28_15 SR29_15 SR30_15 SR31_15
 ];
 attach variables [ VR0004 VR1115 ] [
     vr0  vr1  vr2  vr3  vr4  vr5  vr6  vr7
@@ -217,7 +217,7 @@ attach variables [ VR0004 VR1115 ] [
 
 
 #{ "jarl",	two (0xc7e0, 0x0160),	two (0xffe0, 0x07ff),	{R1, R3_NOTR0},   	1, PROCESSOR_V850E3V5_UP},
-:jarl [R0004], R2731 is op0515=0x63f & R0004; op1626=0x160 & R2731 {
+:jarl [R0004], R2731 is op0515=0x63f & R0004; op1626=0x160 & op2731!=0 & R2731 {
     R2731 = inst_next;
     PC = R0004;
     call [R0004];
@@ -234,14 +234,12 @@ attach variables [ VR0004 VR1115 ] [
 
 # loop reg1, disp16
 #{ "loop",	two (0x06e0, 0x0001),	two (0xffe0, 0x0001), 	{R1, D16_LOOP}, 	0, PROCESSOR_V850E3V5_UP },
-:loop r0004, addr16loop		is op0515=0x037 & r0004 ; op1616=1 & addr16loop {
-    local cnt:4 = r0004 - 1;
-    if (cnt == 0) goto inst_next;
-
-    flags_add(r0004, -1);	# carry as add, not sub!
-    r0004 = cnt;
-
-    goto addr16loop;
+:loop R0004, addr16loop		is op0515=0x037 & R0004 ; op1616=1 & addr16loop {
+    # reg1 = reg1 - 1 (flags as ADD reg1, -1); branch while reg1 != 0
+    local cnt:4 = R0004 - 1;
+    flags_add(R0004, -1);
+    R0004 = cnt;
+    if (cnt != 0) goto addr16loop;
 }
 
 
@@ -433,7 +431,7 @@ buildPopSp: is rXX & buildPopSp [ counter=counter-1; regNum=regNum-1; ]
 	build buildPopSp;
 }
 #{ "popsp",	two (0x67e0, 0x0160),	two (0xffe0, 0x07ff),	{R1, R3}, 		0, PROCESSOR_V850E3V5_UP },
-:popsp R0004, R2731		is op0515=0x33F & R0004 & op0004 ; op1626=0x160 & R2731 & op2731 & buildPopSp
+:popsp R0004^"-"^R2731		is op0515=0x33F & R0004 & op0004 ; op1626=0x160 & R2731 & op2731 & buildPopSp
 [ counter=op2731-op0004+1; regNum=op2731+1; ] {
 	# popsp rh, rt
 	# Loads general-purpose register rt to rh from the stack in descending order (rt, rt - 1, rt - 2, ..., rh). After all the registers
@@ -459,7 +457,7 @@ buildPushSp: is rXX & buildPushSp [ counter=counter-1; regNum=regNum+1; ]
 	build buildPushSp;
 }
 #{ "pushsp",	two (0x47e0, 0x0160),	two (0xffe0, 0x07ff),	{R1, R3}, 		0, PROCESSOR_V850E3V5_UP },
-:pushsp R0004, R2731	is op0515=0x23F & R0004 & op0004 ; op1626=0x160 & R2731 & op2731 & buildPushSp
+:pushsp R0004^"-"^R2731	is op0515=0x23F & R0004 & op0004 ; op1626=0x160 & R2731 & op2731 & buildPushSp
 [ counter=op2731-op0004+1; regNum=op0004-1; ] {
 	# pushsp rh, rt
 	# Stores general-purpose register rh to rt in the stack in ascending order (rh, rh +1, rh + 2, ..., rt). After all the specified
@@ -533,103 +531,113 @@ with : op2026=0x0D {		# msb < 16, lsb < 16
 # unknown special instructions (documented in separate RH850 manual?..)
 
 #{ "cache",	two (0xe7e0, 0x0160),	two (0xe7e0, 0x07ff),	{CACHEOP, R1}, 		2, PROCESSOR_V850E3V5_UP },
-:cache cacheop, R0004	is op0510=0x3F & op1315=0x7 & R0004 & op1112 ; op1626=0x160 & op2731 [ cacheop = (op1112<<5) | op2731; ] unimpl
+define pcodeop __cache;
+define pcodeop __pref;
+define pcodeop __debug;
+define pcodeop __hvcall;
+define pcodeop __hvtrap;
+define pcodeop __ldtc;
+define pcodeop __sttc;
+define pcodeop __ldvc;
+define pcodeop __stvc;
+define pcodeop __tlb;
+define pcodeop __stsr;
+define pcodeop __ldsr;
 
-#{ "dbcp",	one (0xe840),		one (0xffff),		{0},			0, PROCESSOR_V850E3V5_UP },
-:dbcp					is op0015=0xE840		unimpl
-#{ "dbhvtrap",	one (0xe040),		one (0xffff),		{0},			0, PROCESSOR_V850E3V5_UP },
-:dbhvtrap				is op0015=0xE040		unimpl
-#{ "dbpush",	two (0x5fe0, 0x0160),	two (0xffe0, 0x07ff),	{R1, R3}, 		0, PROCESSOR_V850E3V5_UP },
-:dbpush	R0004, R2731	is op0515=0x2FF & R0004 ; op1626=0x160 & R2731	unimpl
-#{ "dbtag",	two (0xcfe0, 0x0160),	two (0xffe0, 0x07ff),	{IMM10U},		0, PROCESSOR_V850E3V5_UP },
-:dbtag imm10			is op0515=0x67F & op0004 ; op1626=0x160 & op2731 [ imm10 = (op2731 << 5) | op0004; ]	unimpl
+# CACHE cacheop, [reg1]: the manual's names for the defined operations
+cacheop: "chbii"	is op1112=0 ; op2731=0x00 { export 0x00:1; }
+cacheop: "cibii"	is op1112=1 ; op2731=0x00 { export 0x20:1; }
+cacheop: "cfali"	is op1112=2 ; op2731=0x00 { export 0x40:1; }
+cacheop: "cisti"	is op1112=3 ; op2731=0x00 { export 0x60:1; }
+cacheop: "cildi"	is op1112=3 ; op2731=0x01 { export 0x61:1; }
+cacheop: "chbid"	is op1112=0 ; op2731=0x04 { export 0x04:1; }
+cacheop: "chbiwbd"	is op1112=0 ; op2731=0x06 { export 0x06:1; }
+cacheop: "chbwbd"	is op1112=0 ; op2731=0x07 { export 0x07:1; }
+cacheop: "cibid"	is op1112=1 ; op2731=0x04 { export 0x24:1; }
+cacheop: "cibiwbd"	is op1112=1 ; op2731=0x06 { export 0x26:1; }
+cacheop: "cibwbd"	is op1112=1 ; op2731=0x07 { export 0x27:1; }
+cacheop: "cfald"	is op1112=2 ; op2731=0x04 { export 0x44:1; }
+cacheop: "cistd"	is op1112=3 ; op2731=0x04 { export 0x64:1; }
+cacheop: "cildd"	is op1112=3 ; op2731=0x05 { export 0x65:1; }
+cacheop: op		is op1112 ; op2731 [ op = (op1112 << 5) | op2731; ] { export *[const]:1 op; }
+:cache cacheop, [R0004]	is ((op0510=0x3F & op1315=0x7 & R0004) ; op1626=0x160) & cacheop {
+	__cache(cacheop, R0004);
+}
 
-#{ "dst",	two (0x07e0, 0x0134),	two (0xfffff, 0xffff),	{0}, 		0, PROCESSOR_V850E3V5_UP },
-:dst					is op0015=0x07E0 ; op1631=0x0134	unimpl
-#{ "est",	two (0x07e0, 0x0132),	two (0xfffff, 0xffff),	{0}, 		0, PROCESSOR_V850E3V5_UP },
-:est					is op0015=0x07E0 ; op1631=0x0132	unimpl
+prefop: "prefi"	is op2731=0 { export 0:1; }
+prefop: "prefd"	is op2731=4 { export 4:1; }
+prefop: op2731	is op2731 { export *[const]:1 op2731; }
+:pref prefop, [R0004]	is op0515=0x6FF & R0004 ; op1626=0x160 & prefop {
+	__pref(prefop, R0004);
+}
 
-#{ "hvcall",	two (0xd7e0, 0x4160),	two (0xffe0, 0x41ff),	{VECTOR8}, 		0, PROCESSOR_V850E3V5_UP },
-:hvcall vect8	is op0515=0x6BF & op0004 ; op1624=0x160 & op3030=1 & op2729 [ vect8 = (op2729 << 5) | op0004; ]	unimpl
-#{ "hvtrap",	two (0x07e0, 0x0110),	two (0xffe0, 0xffff),	{VECTOR5}, 		0, PROCESSOR_V850E3V5_UP },
-:hvtrap op0004	is op0515=0x03F & op0004 ; op1631=0x0110	unimpl
+:dbcp					is op0015=0xE840		{ __debug(0x0:1); }
+:dbhvtrap				is op0015=0xE040		{ __debug(0x1:1); }
+:dbpush	R0004^"-"^R2731	is op0515=0x2FF & R0004 ; op1626=0x160 & R2731	{ __debug(0x2:1, R0004, R2731); }
+:dbtag imm10			is op0515=0x67F & op0004 ; op1626=0x160 & op2731 [ imm10 = (op2731 << 5) | op0004; ]	{ __debug(0x3:1, imm10:2); }
 
-#{ "ldtc.gr",	two (0x07e0, 0x0032),	two (0x07e0, 0xffff),	{R1, R2}, 		0, PROCESSOR_V850E3V5_UP },
-:ldtc.gr R0004, R1115	is op0510=0x3F & R0004 & R1115 ; op1631=0x0032		unimpl
+:dst					is op0015=0x07E0 ; op1631=0x0134	{ __hvcall(0x100:2); }
+:est					is op0015=0x07E0 ; op1631=0x0132	{ __hvcall(0x101:2); }
 
-#{ "ldtc.sr",	two (0x07e0, 0x0030),	two (0x07e0, 0x07ff),	{R1, SR2},	 	0, PROCESSOR_V850E3V5_UP },
-:ldtc.sr R0004, SR1115		is op0510=0x03F & R0004 & SR1115   ; op1626=0x030 & op2731=0 unimpl
-#{ "ldtc.sr",	two (0x07e0, 0x0030),	two (0x07e0, 0x07ff),	{R1, SR2, SELID}, 	0, PROCESSOR_V850E3V5_UP },
-:ldtc.sr R0004, SR1115_1, 1	is op0510=0x03F & R0004 & SR1115_1 ; op1626=0x030 & op2731=1 unimpl
-:ldtc.sr R0004, SR1115_2, 2	is op0510=0x03F & R0004 & SR1115_2 ; op1626=0x030 & op2731=2 unimpl
-:ldtc.sr R0004, SR1115, 3	is op0510=0x03F & R0004 & SR1115   ; op1626=0x030 & op2731=3 unimpl
-:ldtc.sr R0004, SR1115_4, 4	is op0510=0x03F & R0004 & SR1115_4 ; op1626=0x030 & op2731=4 unimpl
-:ldtc.sr R0004, SR1115_5, 5	is op0510=0x03F & R0004 & SR1115_5 ; op1626=0x030 & op2731=5 unimpl
-:ldtc.sr R0004, SR1115_6, 6	is op0510=0x03F & R0004 & SR1115_6 ; op1626=0x030 & op2731=6 unimpl
-:ldtc.sr R0004, SR1115_7, 7	is op0510=0x03F & R0004 & SR1115_7 ; op1626=0x030 & op2731=7 unimpl
+:hvcall vect8	is op0515=0x6BF & op0004 ; op1624=0x160 & op3030=1 & op2729 [ vect8 = (op2729 << 5) | op0004; ]	{ __hvcall(vect8:2); }
+:hvtrap op0004	is op0515=0x03F & op0004 ; op1631=0x0110	{ __hvtrap(op0004:1); }
 
-#{ "ldtc.vr",	two (0x07e0, 0x0832),	two (0x07e0, 0xffff),	{R1, VR2}, 		0, PROCESSOR_V850E3V5_UP },
-:ldtc.vr R0004, VR1115	is op0515=0x03F & R0004 & VR1115 ; op1631=0x0832	unimpl
+:ldtc.gr R0004, R1115	is op0510=0x3F & R0004 & R1115 ; op1631=0x0032	{ __ldtc(0:1, R0004, R1115); }
+:ldtc.vr R0004, VR1115	is op0510=0x3F & R0004 & VR1115 ; op1631=0x0832	{ VR1115 = R0004; }
+:ldtc.pc R0004			is op0510=0x3F & R0004 ; op1631=0xF832			{ __ldtc(1:1, R0004); }
+:sttc.gr R0004, R1115	is op0510=0x3F & R0004 & R1115 ; op1631=0x0052	{ R1115 = __sttc(0:1, R0004); }
+:sttc.vr VR0004, R1115	is op0510=0x3F & VR0004 & R1115 ; op1631=0x0852	{ R1115 = VR0004; }
+:sttc.pc R1115			is op0510=0x3F & R1115 ; op1631=0xF852			{ R1115 = __sttc(1:1); }
 
-#{ "ldtc.pc",	two (0x07e0, 0xf832),	two (0x07e0, 0xffff),	{R1}, 			0, PROCESSOR_V850E3V5_UP },
-:ldtc.pc R0004			is op0515=0x03F & R0004 ; op1631=0xF832				unimpl
+:ldtc.sr R0004, SR1115, 0	is op0510=0x03F & R0004 & SR1115 ; op1626=0x030 & op2731=0	{ __ldtc(2:1, SR1115, R0004); }
+:ldtc.sr R0004, SR1115_1, 1	is op0510=0x03F & R0004 & SR1115_1 ; op1626=0x030 & op2731=1	{ __ldtc(2:1, SR1115_1, R0004); }
+:ldtc.sr R0004, SR1115_2, 2	is op0510=0x03F & R0004 & SR1115_2 ; op1626=0x030 & op2731=2	{ __ldtc(2:1, SR1115_2, R0004); }
+:ldtc.sr R0004, SR1115, 3	is op0510=0x03F & R0004 & SR1115 ; op1626=0x030 & op2731=3	{ __ldtc(2:1, SR1115, R0004); }
+:ldtc.sr R0004, SR1115_4, 4	is op0510=0x03F & R0004 & SR1115_4 ; op1626=0x030 & op2731=4	{ __ldtc(2:1, SR1115_4, R0004); }
+:ldtc.sr R0004, SR1115_5, 5	is op0510=0x03F & R0004 & SR1115_5 ; op1626=0x030 & op2731=5	{ __ldtc(2:1, SR1115_5, R0004); }
+:ldtc.sr R0004, SR1115_6, 6	is op0510=0x03F & R0004 & SR1115_6 ; op1626=0x030 & op2731=6	{ __ldtc(2:1, SR1115_6, R0004); }
+:ldtc.sr R0004, SR1115_7, 7	is op0510=0x03F & R0004 & SR1115_7 ; op1626=0x030 & op2731=7	{ __ldtc(2:1, SR1115_7, R0004); }
+:ldtc.sr R0004, SRN1115, op2731	is op0510=0x03F & R0004 & SRN1115 ; op1626=0x030 & op2731	{ __ldtc(3:1, SRN1115:1, op2731:1, R0004); }
 
-#{ "ldvc.sr",	two (0x07e0, 0x0034),	two (0x07e0, 0x07ff),	{R1, SR2}, 	0, PROCESSOR_V850E3V5_UP },
-:ldvc.sr R0004, SR1115		is op0510=0x03F & R0004 & SR1115   ; op1626=0x034 & op2731=0 unimpl
-#{ "ldvc.sr",	two (0x07e0, 0x0034),	two (0x07e0, 0x07ff),	{R1, SR2, SELID}, 	0, PROCESSOR_V850E3V5_UP },
-:ldvc.sr R0004, SR1115_1, 1	is op0510=0x03F & R0004 & SR1115_1 ; op1626=0x034 & op2731=1 unimpl
-:ldvc.sr R0004, SR1115_2, 2	is op0510=0x03F & R0004 & SR1115_2 ; op1626=0x034 & op2731=2 unimpl
-:ldvc.sr R0004, SR1115, 3	is op0510=0x03F & R0004 & SR1115   ; op1626=0x034 & op2731=3 unimpl
-:ldvc.sr R0004, SR1115_4, 4	is op0510=0x03F & R0004 & SR1115_4 ; op1626=0x034 & op2731=4 unimpl
-:ldvc.sr R0004, SR1115_5, 5	is op0510=0x03F & R0004 & SR1115_5 ; op1626=0x034 & op2731=5 unimpl
-:ldvc.sr R0004, SR1115_6, 6	is op0510=0x03F & R0004 & SR1115_6 ; op1626=0x034 & op2731=6 unimpl
-:ldvc.sr R0004, SR1115_7, 7	is op0510=0x03F & R0004 & SR1115_7 ; op1626=0x034 & op2731=7 unimpl
+:ldvc.sr R0004, SR1115, 0	is op0510=0x03F & R0004 & SR1115 ; op1626=0x034 & op2731=0	{ __ldvc(2:1, SR1115, R0004); }
+:ldvc.sr R0004, SR1115_1, 1	is op0510=0x03F & R0004 & SR1115_1 ; op1626=0x034 & op2731=1	{ __ldvc(2:1, SR1115_1, R0004); }
+:ldvc.sr R0004, SR1115_2, 2	is op0510=0x03F & R0004 & SR1115_2 ; op1626=0x034 & op2731=2	{ __ldvc(2:1, SR1115_2, R0004); }
+:ldvc.sr R0004, SR1115, 3	is op0510=0x03F & R0004 & SR1115 ; op1626=0x034 & op2731=3	{ __ldvc(2:1, SR1115, R0004); }
+:ldvc.sr R0004, SR1115_4, 4	is op0510=0x03F & R0004 & SR1115_4 ; op1626=0x034 & op2731=4	{ __ldvc(2:1, SR1115_4, R0004); }
+:ldvc.sr R0004, SR1115_5, 5	is op0510=0x03F & R0004 & SR1115_5 ; op1626=0x034 & op2731=5	{ __ldvc(2:1, SR1115_5, R0004); }
+:ldvc.sr R0004, SR1115_6, 6	is op0510=0x03F & R0004 & SR1115_6 ; op1626=0x034 & op2731=6	{ __ldvc(2:1, SR1115_6, R0004); }
+:ldvc.sr R0004, SR1115_7, 7	is op0510=0x03F & R0004 & SR1115_7 ; op1626=0x034 & op2731=7	{ __ldvc(2:1, SR1115_7, R0004); }
+:ldvc.sr R0004, SRN1115, op2731	is op0510=0x03F & R0004 & SRN1115 ; op1626=0x034 & op2731	{ __ldvc(3:1, SRN1115:1, op2731:1, R0004); }
 
-#{ "pref",	two (0xdfe0, 0x0160),	two (0xffe0, 0x07ff),	{PREFOP, R1}, 		2, PROCESSOR_V850E3V5_UP },
-:pref op2731, R0004		is op0515=0x6FF & R0004 ; op1626=0x160 & op2731		unimpl
+:sttc.sr SR0004, R1115, 0	is op0510=0x03F & SR0004 & R1115 ; op1626=0x050 & op2731=0	{ R1115 = __sttc(2:1, SR0004); }
+:sttc.sr SR0004_1, R1115, 1	is op0510=0x03F & SR0004_1 & R1115 ; op1626=0x050 & op2731=1	{ R1115 = __sttc(2:1, SR0004_1); }
+:sttc.sr SR0004_2, R1115, 2	is op0510=0x03F & SR0004_2 & R1115 ; op1626=0x050 & op2731=2	{ R1115 = __sttc(2:1, SR0004_2); }
+:sttc.sr SR0004, R1115, 3	is op0510=0x03F & SR0004 & R1115 ; op1626=0x050 & op2731=3	{ R1115 = __sttc(2:1, SR0004); }
+:sttc.sr SR0004_4, R1115, 4	is op0510=0x03F & SR0004_4 & R1115 ; op1626=0x050 & op2731=4	{ R1115 = __sttc(2:1, SR0004_4); }
+:sttc.sr SR0004_5, R1115, 5	is op0510=0x03F & SR0004_5 & R1115 ; op1626=0x050 & op2731=5	{ R1115 = __sttc(2:1, SR0004_5); }
+:sttc.sr SR0004_6, R1115, 6	is op0510=0x03F & SR0004_6 & R1115 ; op1626=0x050 & op2731=6	{ R1115 = __sttc(2:1, SR0004_6); }
+:sttc.sr SR0004_7, R1115, 7	is op0510=0x03F & SR0004_7 & R1115 ; op1626=0x050 & op2731=7	{ R1115 = __sttc(2:1, SR0004_7); }
+:sttc.sr SRN0004, R1115, op2731	is op0510=0x03F & SRN0004 & R1115 ; op1626=0x050 & op2731	{ R1115 = __sttc(3:1, SRN0004:1, op2731:1); }
 
-#{ "sttc.gr",	two (0x07e0, 0x0052),	two (0x07e0, 0xffff),	{R1, R2}, 		0, PROCESSOR_V850E3V5_UP },
-:sttc.gr R0004, R1115	is op0515=0x03F & R0004 & R1115 ; op1631=0x0052		unimpl
+:stvc.sr SR0004, R1115, 0	is op0510=0x03F & SR0004 & R1115 ; op1626=0x054 & op2731=0	{ R1115 = __stvc(2:1, SR0004); }
+:stvc.sr SR0004_1, R1115, 1	is op0510=0x03F & SR0004_1 & R1115 ; op1626=0x054 & op2731=1	{ R1115 = __stvc(2:1, SR0004_1); }
+:stvc.sr SR0004_2, R1115, 2	is op0510=0x03F & SR0004_2 & R1115 ; op1626=0x054 & op2731=2	{ R1115 = __stvc(2:1, SR0004_2); }
+:stvc.sr SR0004, R1115, 3	is op0510=0x03F & SR0004 & R1115 ; op1626=0x054 & op2731=3	{ R1115 = __stvc(2:1, SR0004); }
+:stvc.sr SR0004_4, R1115, 4	is op0510=0x03F & SR0004_4 & R1115 ; op1626=0x054 & op2731=4	{ R1115 = __stvc(2:1, SR0004_4); }
+:stvc.sr SR0004_5, R1115, 5	is op0510=0x03F & SR0004_5 & R1115 ; op1626=0x054 & op2731=5	{ R1115 = __stvc(2:1, SR0004_5); }
+:stvc.sr SR0004_6, R1115, 6	is op0510=0x03F & SR0004_6 & R1115 ; op1626=0x054 & op2731=6	{ R1115 = __stvc(2:1, SR0004_6); }
+:stvc.sr SR0004_7, R1115, 7	is op0510=0x03F & SR0004_7 & R1115 ; op1626=0x054 & op2731=7	{ R1115 = __stvc(2:1, SR0004_7); }
+:stvc.sr SRN0004, R1115, op2731	is op0510=0x03F & SRN0004 & R1115 ; op1626=0x054 & op2731	{ R1115 = __stvc(3:1, SRN0004:1, op2731:1); }
 
-#{ "sttc.sr",	two (0x07e0, 0x0050),	two (0x07e0, 0x07ff),	{SR1, R2, SELID}, 	0, PROCESSOR_V850E3V5_UP },
-:sttc.sr SR0004, R1115		is op0510=0x03F & SR0004   & R1115 ; op1626=0x050 & op2731=0 unimpl
-#{ "sttc.sr",	two (0x07e0, 0x0050),	two (0x07e0, 0x07ff),	{SR1, R2, SELID}, 	0, PROCESSOR_V850E3V5_UP },
-:sttc.sr SR0004_1, R1115, 1	is op0510=0x03F & SR0004_1 & R1115 ; op1626=0x050 & op2731=1 unimpl
-:sttc.sr SR0004_2, R1115, 2	is op0510=0x03F & SR0004_2 & R1115 ; op1626=0x050 & op2731=2 unimpl
-:sttc.sr SR0004, R1115, 3	is op0510=0x03F & SR0004   & R1115 ; op1626=0x050 & op2731=3 unimpl
-:sttc.sr SR0004_4, R1115, 4	is op0510=0x03F & SR0004_4 & R1115 ; op1626=0x050 & op2731=4 unimpl
-:sttc.sr SR0004_5, R1115, 5	is op0510=0x03F & SR0004_5 & R1115 ; op1626=0x050 & op2731=5 unimpl
-:sttc.sr SR0004_6, R1115, 6	is op0510=0x03F & SR0004_6 & R1115 ; op1626=0x050 & op2731=6 unimpl
-:sttc.sr SR0004_7, R1115, 7	is op0510=0x03F & SR0004_7 & R1115 ; op1626=0x050 & op2731=7 unimpl
+# LDSR/STSR with a regID/selID combination that has no name here
+:stsr SRN0004, R1115, op2731	is op0510=0x3F & R1115 & SRN0004; op1626=0x40 & op2731	{ R1115 = __stsr(SRN0004:1, op2731:1); }
+:ldsr R0004, SRN1115, op2731	is op0510=0x3F & SRN1115 & R0004; op1626=0x20 & op2731	{ __ldsr(SRN1115:1, op2731:1, R0004); }
 
-#{ "sttc.vr",	two (0x07e0, 0x0852),	two (0x07e0, 0xffff),	{VR1, R2}, 		0, PROCESSOR_V850E3V5_UP },
-:sttc.vr VR0004, R1115	is op0515=0x03F & VR0004 & R1115 ; op1631=0x0852	unimpl
-
-#{ "sttc.pc",	two (0x07e0, 0xf852),	two (0x07e0, 0xffff),	{R2}, 			0, PROCESSOR_V850E3V5_UP },
-:sttc.pc R1115			is op0515=0x03F & R1115 ; op1631=0xF852				unimpl
-
-#{ "stvc.sr",	two (0x07e0, 0x0054),	two (0x07e0, 0x07ff),	{SR1, R2}, 	0, PROCESSOR_V850E3V5_UP },
-:stvc.sr SR0004, R1115		is op0510=0x03F & SR0004   & R1115 ; op1626=0x054 & op2731=0 unimpl
-#{ "stvc.sr",	two (0x07e0, 0x0054),	two (0x07e0, 0x07ff),	{SR1, R2, SELID}, 	0, PROCESSOR_V850E3V5_UP },
-:stvc.sr SR0004_1, R1115, 1	is op0510=0x03F & SR0004_1 & R1115 ; op1626=0x054 & op2731=1 unimpl
-:stvc.sr SR0004_2, R1115, 2	is op0510=0x03F & SR0004_2 & R1115 ; op1626=0x054 & op2731=2 unimpl
-:stvc.sr SR0004, R1115, 3	is op0510=0x03F & SR0004   & R1115 ; op1626=0x054 & op2731=3 unimpl
-:stvc.sr SR0004_4, R1115, 4	is op0510=0x03F & SR0004_4 & R1115 ; op1626=0x054 & op2731=4 unimpl
-:stvc.sr SR0004_5, R1115, 5	is op0510=0x03F & SR0004_5 & R1115 ; op1626=0x054 & op2731=5 unimpl
-:stvc.sr SR0004_6, R1115, 6	is op0510=0x03F & SR0004_6 & R1115 ; op1626=0x054 & op2731=6 unimpl
-:stvc.sr SR0004_7, R1115, 7	is op0510=0x03F & SR0004_7 & R1115 ; op1626=0x054 & op2731=7 unimpl
-
-
-#{ "tlbai",	two (0x87e0, 0x8960),	two (0xffff, 0xffff),	{0},	 		0, PROCESSOR_V850E3V5_UP },
-:tlbai		is op0015=0x87E0 ; op1631=0x8960	unimpl
-#{ "tlbr",	two (0x87e0, 0xe960),	two (0xffff, 0xffff),	{0},	 		0, PROCESSOR_V850E3V5_UP },
-:tlbr		is op0015=0x87E0 ; op1631=0xE960	unimpl
-#{ "tlbs",	two (0x87e0, 0xc160),	two (0xffff, 0xffff),	{0},	 		0, PROCESSOR_V850E3V5_UP },
-:tlbs		is op0015=0x87E0 ; op1631=0xC160	unimpl
-#{ "tlbvi",	two (0x87e0, 0x8160),	two (0xffff, 0xffff),	{0},	 		0, PROCESSOR_V850E3V5_UP },
-:tlbvi		is op0015=0x87E0 ; op1631=0x8160	unimpl
-#{ "tlbw",	two (0x87e0, 0xe160),	two (0xffff, 0xffff),	{0},	 		0, PROCESSOR_V850E3V5_UP },
-:tlbw		is op0015=0x87E0 ; op1631=0xE160	unimpl
+:tlbai		is op0015=0x87E0 ; op1631=0x8960	{ __tlb(0:1); }
+:tlbr		is op0015=0x87E0 ; op1631=0xE960	{ __tlb(1:1); }
+:tlbs		is op0015=0x87E0 ; op1631=0xC160	{ __tlb(2:1); }
+:tlbvi		is op0015=0x87E0 ; op1631=0x8160	{ __tlb(3:1); }
+:tlbw		is op0015=0x87E0 ; op1631=0xE160	{ __tlb(4:1); }
 
 
 
