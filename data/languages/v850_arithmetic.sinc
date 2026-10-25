@@ -100,10 +100,10 @@ macro saturate(value) {
 }
 
 # ADD imm5, reg2
-:add s0004, r1115 is op0510=0x12 & s0004 & r1115 {
-	local res = r1115 + s0004;
-	flags_add (r1115, s0004);
-	r1115 = res;
+:add s0004, R1115 is op0510=0x12 & s0004 & R1115 {
+	local res = R1115 + s0004;
+	flags_add (R1115, s0004);
+	R1115 = res;
 }
 
 # CMP imm5, reg2
@@ -145,7 +145,7 @@ macro saturate(value) {
 	r1115 = res:4;}
 
 # MULHI imm16, reg1, reg2
-:mulhi s1631, R0004, R1115 is op0510=0x37 & R1115 & R0004; s1631 {
+:mulhi s1631, R0004, R1115 is op0510=0x37 & op1115!=0 & R1115 & R0004; s1631 {
 	R1115 = sext(R0004:2) * s1631;
 }
 
