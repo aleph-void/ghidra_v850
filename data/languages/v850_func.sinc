@@ -12,6 +12,11 @@
 	PC = R0004;
 	goto [R0004];
 }
+# the indirect call GCC emits for V850E2 (no JARL [reg]): jarl .+4, lp; add 4, lp; jmp [reg]
+:jmp [R0004] is icall=1 & op0515=0x003 & R0004 & op0004 != 31 {
+	PC = R0004;
+	call [R0004];
+}
 
 # JR disp32
 :jr addr32 is op0015=0x02E0; op1616=0 ... & addr32 {
@@ -39,6 +44,17 @@
 }
 
 
+# JARL .+4, lp: reads the PC (first instruction of GCC's V850E2 indirect call sequence)
+:jarl addr22, lp is (op0610=0x1E & op1115=31 & s0005=0 & lp; op1631=4) & addr22
+[ icall = 1; globalset(inst_next, icall); ] {
+	lp = inst_next;
+}
+# ... add 4, lp passes the mark on to the jmp
+:add s0004, R1115 is icall=1 & op0510=0x12 & s0004 & R1115 [ globalset(inst_next, icall); ] {
+	local res = R1115 + s0004;
+	flags_add (R1115, s0004);
+	R1115 = res;
+}
 # JARL disp22, reg2
 :jarl addr22, r1115 is (op0610=0x1E & r1115) ... & addr22 {
 	r1115 = inst_next;
